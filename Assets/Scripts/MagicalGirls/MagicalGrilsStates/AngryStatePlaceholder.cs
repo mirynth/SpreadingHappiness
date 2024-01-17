@@ -10,6 +10,6 @@ public class AngryStatePlaceholder : AbstractAngryState
 	public AngryStatePlaceholder(AbstractMagicalGirlController mg) : base(mg)
 	{}
 
-	public override void Shoot(){this.ShootStraight(180, 300);}
+	public override void Shoot(){this.ShootInCircle(300, BulletType.Wrath);}
 	public override void Move(){}
 }

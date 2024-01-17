@@ -10,6 +10,6 @@ public class HappyStatePlaceholder : AbstractHappyState
 	public HappyStatePlaceholder(AbstractMagicalGirlController mg) : base(mg)
 	{}
 		
-	public override void Shoot(){this.ShootStraight(90, 300);}
+	public override void Shoot(){this.ShootInCircle(300, BulletType.Boba);}
 	public override void Move(){}
 }

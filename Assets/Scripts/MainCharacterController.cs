@@ -21,8 +21,8 @@ public class MainCharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
    {
-        hitboxCollider = transform.Find("hitboxCircle").GetComponent<CircleCollider2D>();
-        hitboxRenderer = transform.Find("hitboxCircle").GetComponent<SpriteRenderer>();
+        hitboxCollider = transform.Find("bowbaCharacter").GetComponent<CircleCollider2D>();
+        hitboxRenderer = transform.Find("bowbaArt").GetComponent<SpriteRenderer>();
    }
 	
    // ************************************************************************
@@ -32,7 +32,10 @@ public class MainCharacterController : MonoBehaviour
    {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
-
+        Vector2 position = transform.position;
+        position.x = position.x + hSpeed * horizontal * Time.deltaTime;
+        position.y = position.y + vSpeed * vertical * Time.deltaTime;
+        transform.position = position;
         // Apply strafe when LeftShift is held down
         if (Input.GetKeyDown(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift)))
         {
@@ -46,13 +49,13 @@ public class MainCharacterController : MonoBehaviour
 	
    // ************************************************************************
 	
-    void FixedUpdate()
+    /*void FixedUpdate()
     {
         Vector2 position = transform.position;
         position.x = position.x + hSpeed * horizontal * Time.deltaTime;
         position.y = position.y + vSpeed * vertical * Time.deltaTime;
         transform.position = position;
-    }
+    }*/
 
    // ************************************************************************
 	

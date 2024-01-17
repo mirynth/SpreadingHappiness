@@ -7,13 +7,12 @@ public abstract class AbstractAngryState : AbstractMagicalGirlState
 	public AbstractAngryState(AbstractMagicalGirlController mg) : base(mg){}
 	
 	// Shoot in a specific direction
-	public override void ShootStraight(Vector2 direction, float force)
+	public override void ShootStraight(Vector2 direction, float force, BulletType bulletType)
 	{
 		GameObject projectileObject = GameObject.Instantiate(magicalGirl.enemyBulletPrefab, 
-			magicalGirl.rigid2d.position + Vector2.up * 0.5f, 
+			magicalGirl.transform.position + Vector3.up * 0.5f, 
 			Quaternion.identity);
 
-		EnemyBulletController projectile = projectileObject.GetComponent<EnemyBulletController>();
-		projectile.Launch(direction, force);
-	}
+        LaunchProjectiles(projectileObject, direction, force, BulletType.Wrath);
+    }
 }
