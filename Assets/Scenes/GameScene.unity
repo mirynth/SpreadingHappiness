@@ -202,6 +202,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8893561570452640744, guid: 8b07d6772396a6c40b2d8d4a07825978,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -358,7 +363,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 20.765736
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -659,12 +664,12 @@ PrefabInstance:
     - target: {fileID: 1956568274515334026, guid: 8b07d6772396a6c40b2d8d4a07825978,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27
+      value: 20.1
       objectReference: {fileID: 0}
     - target: {fileID: 1956568274515334026, guid: 8b07d6772396a6c40b2d8d4a07825978,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12.8
+      value: -1.24
       objectReference: {fileID: 0}
     - target: {fileID: 1956568274515334026, guid: 8b07d6772396a6c40b2d8d4a07825978,
         type: 3}
@@ -811,6 +816,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8893561570452640744, guid: 8b07d6772396a6c40b2d8d4a07825978,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -827,12 +837,12 @@ PrefabInstance:
     - target: {fileID: 1956568274515334026, guid: 8b07d6772396a6c40b2d8d4a07825978,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.34
+      value: 11.19
       objectReference: {fileID: 0}
     - target: {fileID: 1956568274515334026, guid: 8b07d6772396a6c40b2d8d4a07825978,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.41
+      value: 10.77
       objectReference: {fileID: 0}
     - target: {fileID: 1956568274515334026, guid: 8b07d6772396a6c40b2d8d4a07825978,
         type: 3}
@@ -913,6 +923,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicalGirlPlHappyStart (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 941520856137459764, guid: 11529c13972f92842b55b2b5e5960dac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1869136345048440789, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -967,7 +982,8 @@ PrefabInstance:
         type: 3}
       propertyPath: bobaBitPrefab
       value: 
-      objectReference: {fileID: 1797378092}
+      objectReference: {fileID: 7619055656009917487, guid: ccbf5382d19089c47ae09e2aff369442,
+        type: 3}
     - target: {fileID: 7225075890013868468, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
       propertyPath: enemyBulletPrefab
@@ -990,6 +1006,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MagicalGirlPlHappyStart (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 941520856137459764, guid: 11529c13972f92842b55b2b5e5960dac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1869136345048440789, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
@@ -1045,7 +1066,8 @@ PrefabInstance:
         type: 3}
       propertyPath: bobaBitPrefab
       value: 
-      objectReference: {fileID: 1797378092}
+      objectReference: {fileID: 7619055656009917487, guid: ccbf5382d19089c47ae09e2aff369442,
+        type: 3}
     - target: {fileID: 7225075890013868468, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
       propertyPath: enemyBulletPrefab
@@ -1135,6 +1157,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8893561570452640744, guid: 8b07d6772396a6c40b2d8d4a07825978,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1152,6 +1179,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MagicalGirlPlHappyStart
+      objectReference: {fileID: 0}
+    - target: {fileID: 941520856137459764, guid: 11529c13972f92842b55b2b5e5960dac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1869136345048440789, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
@@ -1207,7 +1239,8 @@ PrefabInstance:
         type: 3}
       propertyPath: bobaBitPrefab
       value: 
-      objectReference: {fileID: 1797378092}
+      objectReference: {fileID: 7619055656009917487, guid: ccbf5382d19089c47ae09e2aff369442,
+        type: 3}
     - target: {fileID: 7225075890013868468, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
       propertyPath: enemyBulletPrefab
@@ -1310,6 +1343,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicalGirlPlHappyStart (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 941520856137459764, guid: 11529c13972f92842b55b2b5e5960dac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1869136345048440789, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1364,7 +1402,8 @@ PrefabInstance:
         type: 3}
       propertyPath: bobaBitPrefab
       value: 
-      objectReference: {fileID: 1797378092}
+      objectReference: {fileID: 7619055656009917487, guid: ccbf5382d19089c47ae09e2aff369442,
+        type: 3}
     - target: {fileID: 7225075890013868468, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
       propertyPath: enemyBulletPrefab
