@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3315820619302813487}
   - component: {fileID: 7620822189960022492}
   - component: {fileID: 7024654443691674569}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: BobaBit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
