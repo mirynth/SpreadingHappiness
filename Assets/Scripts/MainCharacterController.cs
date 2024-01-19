@@ -15,9 +15,9 @@ public class MainCharacterController : MonoBehaviour
     bool strafeModeOn = false;
     CircleCollider2D hitboxCollider;
     SpriteRenderer hitboxRenderer;
-	
-	float horizontal;
-	float vertical;
+
+    float horizontal;
+    float vertical;
 
     // ************************************************************************
     private void Awake()
@@ -28,8 +28,8 @@ public class MainCharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
    {
-        hitboxCollider = transform.Find("bowbaCharacter").GetComponent<CircleCollider2D>();
-        hitboxRenderer = transform.Find("bowbaArt").GetComponent<SpriteRenderer>();
+        hitboxCollider = transform.GetComponent<CircleCollider2D>();
+        hitboxRenderer = transform.GetComponent<SpriteRenderer>();
    }
 	
    // ************************************************************************
@@ -39,10 +39,24 @@ public class MainCharacterController : MonoBehaviour
    {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
+
+        // Create a direction vector from the horizontal and vertical inputs
+        Vector2 direction = new Vector2(horizontal, vertical);
+
+        // Normalize the direction vector to have a magnitude of 1 if it is not zero
+        if (direction.magnitude > 1)
+        {
+            direction.Normalize();
+        }
+
+        // Update the position based on the normalized direction
         Vector2 position = transform.position;
-        position.x = position.x + hSpeed * horizontal * Time.deltaTime;
-        position.y = position.y + vSpeed * vertical * Time.deltaTime;
+        position += new Vector2(hSpeed * direction.x * Time.deltaTime, vSpeed * direction.y * Time.deltaTime);
         transform.position = position;
+
+        //position.x = position.x + hSpeed * horizontal * Time.deltaTime;
+        //position.y = position.y + vSpeed * vertical * Time.deltaTime;
+        
         // Apply strafe when LeftShift is held down
         if (Input.GetKeyDown(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift)))
         {
@@ -51,7 +65,8 @@ public class MainCharacterController : MonoBehaviour
         //Debug.Log("current speed: " + hSpeed);
 		
 		// TODO: This throws a ref not set exception
-        //Debug.Log("current radius: " + hitboxCollider.radius);
+        //Debug.Log("current radius: " + hitboxCollider);
+  
     }
 	
    // ************************************************************************
@@ -78,12 +93,13 @@ public class MainCharacterController : MonoBehaviour
         }
         else
         {
-            hSpeed = 0.5f * hSpeed;
-            vSpeed = 0.5f * vSpeed;
+            hSpeed = 5.0f;
+            vSpeed = 5.0f;
             hitboxCollider.radius = 0.01f;
             hitboxRenderer.enabled = true;
             strafeModeOn = true;
         }
+        Debug.Log("strafe status: " + strafeModeOn);
    }
    
    // ************************************************************************
