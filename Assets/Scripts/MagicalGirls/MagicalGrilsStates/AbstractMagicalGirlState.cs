@@ -9,7 +9,7 @@ public abstract class AbstractMagicalGirlState
 	public abstract float CooldownTimeBeforeShooting {get;}
 	
 	public abstract void Shoot();
-	public abstract void Move();
+	
 
     public enum BulletType
     {
@@ -38,11 +38,11 @@ public abstract class AbstractMagicalGirlState
 	{
 		this.magicalGirl = mg;
 	}
-	
-	// ************************************************************************
-	
-	// Shoot in an angle (in °, 0° = shooting right)
-	protected void ShootStraight(float angle, float force, BulletType bulletType)
+
+    // ************************************************************************
+    public abstract void Move();
+    // Shoot in an angle (in °, 0° = shooting right)
+    protected void ShootStraight(float angle, float force, BulletType bulletType)
 	{
 		tempAngleConversion = angle*Math.PI/180;
 		ShootStraight(new Vector2((float)Math.Cos(tempAngleConversion), 
