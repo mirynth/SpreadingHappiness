@@ -17,7 +17,7 @@ namespace UI
 			//Just in case the text component is not set
 			if (bobaCountText == null)
 			{
-				Debug.LogWarning("BobaCounterUI.UpdateBobaCount: A text component needs to be assigned to the BobaCounter in the inspector");
+				Debug.LogWarning("BobaCounterUI.Awake: A text component needs to be assigned to the BobaCounter in the inspector");
 				return;
 			}
 
