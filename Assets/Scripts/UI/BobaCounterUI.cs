@@ -14,6 +14,13 @@ namespace UI
 
 		private void Awake()
 		{
+			//Just in case the text component is not set
+			if (bobaCountText == null)
+			{
+				Debug.LogWarning("BobaCounterUI.UpdateBobaCount: A text component needs to be assigned to the BobaCounter in the inspector");
+				return;
+			}
+
 			//Store the default/starting position of the text to use as a reference for the jump animation
 			textDefaultPositionY = bobaCountText.rectTransform.anchoredPosition.y;
 		}
