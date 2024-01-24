@@ -9,8 +9,11 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
 	public bool isAngryAtStart;
 	
 	private float cooldownShootingTimer;
-    private float maxTimeToTurn = 1f;
+    private float directionChangeInterval = 5f;
+    private float directionTimer = 5f;
     private float movementSpeed = 0.01f;
+    private int x_angle = 0;
+    private int y_angle = 0;
 
     // Each magical girl type has one angrystate and one happystate
     // that inherit from these two abstract classes.
@@ -50,13 +53,14 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
 
     public virtual void Move()
     {
-        float time = UnityEngine.Random.Range(0, maxTimeToTurn);
-        int x_angle = UnityEngine.Random.Range(0, 360);
-        int y_angle = UnityEngine.Random.Range(0, 360);
-
-        this.transform.position += new Vector3(1*x_angle, 1*y_angle, 1) * movementSpeed * Time.deltaTime;
     }
 
+
+    void ChangeDirection()
+    {
+        x_angle = UnityEngine.Random.Range(-180, 180);
+        y_angle = UnityEngine.Random.Range(-180, 180);
+    }
     // ************************************************************************
 
     // Start is called before the first frame update
@@ -68,6 +72,9 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
 		if (isAngryAtStart)
 			magicalGirlState = angryState;
 		else magicalGirlState = happyState;
+
+        ChangeDirection();
+        directionTimer = directionChangeInterval;
     }
 
 	// ************************************************************************
@@ -83,6 +90,13 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
 			cooldownShootingTimer += magicalGirlState.CooldownTimeBeforeShooting;
 		}
 
-        Move();
+        this.transform.position += new Vector3(1 * x_angle, 1 * y_angle, 1) * movementSpeed * Time.deltaTime;
+
+        directionTimer -= Time.deltaTime;
+        if(directionTimer <= 0)
+        {
+            ChangeDirection();
+            directionTimer = directionChangeInterval;
+        }
     }
 }
