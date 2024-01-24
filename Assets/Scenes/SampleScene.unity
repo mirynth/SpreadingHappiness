@@ -564,6 +564,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicalGirlPlHappyStart
       objectReference: {fileID: 0}
+    - target: {fileID: 941520856137459764, guid: 11529c13972f92842b55b2b5e5960dac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1869136345048440789, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
       propertyPath: m_LocalPosition.x

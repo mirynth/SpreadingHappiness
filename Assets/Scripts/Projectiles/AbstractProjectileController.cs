@@ -4,7 +4,8 @@ using UnityEngine;
 
 public abstract class AbstractProjectileController : MonoBehaviour
 {	
-    Rigidbody2D rigidbody2d;
+	Rigidbody2D rigidbody2d;
+	AbstractBobaPattern pattern = new BobaPatternDoNothing();
 	
 	// Start is called before the first frame update
 	void Start()
@@ -22,12 +23,26 @@ public abstract class AbstractProjectileController : MonoBehaviour
 			Destroy(gameObject);
 		}
 	}
-	
+
 	// ************************************************************************
-	
+	private void FixedUpdate()
+	{
+		this.pattern.onFixedUpdate(this.rigidbody2d);
+	}
+
+	// ************************************************************************
 	public void Launch(Vector2 direction, float force)
 	{
+		// disable boba patterns when doing a simple launch
+		this.SetPattern(new BobaPatternDoNothing());
+
 		GetComponent<Rigidbody2D>().AddForce(direction * force);
+	}
+
+	// ************************************************************************
+	public void SetPattern(AbstractBobaPattern pattern)
+	{
+		this.pattern = pattern;
 	}
 	
 	// ************************************************************************

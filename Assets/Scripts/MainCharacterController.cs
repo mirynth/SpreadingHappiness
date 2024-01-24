@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MainCharacterController : MonoBehaviour
 {
+    public static MainCharacterController instance;
+
 	// number of boba bits
 	public int BobaBits = 0;
 	
@@ -16,8 +19,12 @@ public class MainCharacterController : MonoBehaviour
     float horizontal;
     float vertical;
 
-   // ************************************************************************
-	
+    // ************************************************************************
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
    {
