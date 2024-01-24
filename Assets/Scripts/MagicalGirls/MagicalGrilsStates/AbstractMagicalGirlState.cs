@@ -40,7 +40,7 @@ public abstract class AbstractMagicalGirlState
 	}
 
     // ************************************************************************
-    public abstract void Move();
+    
     // Shoot in an angle (in °, 0° = shooting right)
     protected void ShootStraight(float angle, float force, BulletType bulletType)
 	{

@@ -9,10 +9,12 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
 	public bool isAngryAtStart;
 	
 	private float cooldownShootingTimer;
-	
-	// Each magical girl type has one angrystate and one happystate
-	// that inherit from these two abstract classes.
-	protected AbstractAngryState angryState;
+    private float maxTimeToTurn = 1f;
+    private float movementSpeed = 0.01f;
+
+    // Each magical girl type has one angrystate and one happystate
+    // that inherit from these two abstract classes.
+    protected AbstractAngryState angryState;
 	protected AbstractHappyState happyState;
 
 	// Please set in editor
@@ -44,10 +46,19 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
 		
 		// Resets the firing cooldown.
 		cooldownShootingTimer = magicalGirlState.CooldownTimeBeforeShooting;
-	}	
-	
-	// ************************************************************************
-	
+	}
+
+    public virtual void Move()
+    {
+        float time = UnityEngine.Random.Range(0, maxTimeToTurn);
+        int x_angle = UnityEngine.Random.Range(0, 360);
+        int y_angle = UnityEngine.Random.Range(0, 360);
+
+        this.transform.position += new Vector3(1*x_angle, 1*y_angle, 1) * movementSpeed * Time.deltaTime;
+    }
+
+    // ************************************************************************
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,5 +82,7 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
 			magicalGirlState.Shoot();
 			cooldownShootingTimer += magicalGirlState.CooldownTimeBeforeShooting;
 		}
+
+        Move();
     }
 }

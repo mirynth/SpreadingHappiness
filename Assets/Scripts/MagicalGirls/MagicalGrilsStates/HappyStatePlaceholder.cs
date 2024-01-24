@@ -11,5 +11,5 @@ public class HappyStatePlaceholder : AbstractHappyState
 	{}
 		
 	public override void Shoot(){this.ShootInCircle(300, BulletType.Boba);}
-	public override void Move(){}
+	//public override void Move(){}
 }

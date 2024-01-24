@@ -18,5 +18,5 @@ public class AngryStatePlaceholder : AbstractAngryState
 	//public override void Shoot(){this.ShootInCircle(300, BulletType.Wrath);}
 	public override void Shoot(){this.ShootMissile(300, BulletType.Wrath);}
 
-	public override void Move(){}
+	//public override void Move(){}
 }
