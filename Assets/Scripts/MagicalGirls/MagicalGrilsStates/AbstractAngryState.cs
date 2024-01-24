@@ -13,6 +13,6 @@ public abstract class AbstractAngryState : AbstractMagicalGirlState
 			magicalGirl.transform.position + Vector3.up * 0.5f, 
 			Quaternion.identity);
 
-        LaunchProjectiles(projectileObject, direction, force, BulletType.Wrath);
+        LaunchProjectiles(projectileObject, direction, force, BulletType.Wrath, new BobaPatternDoNothing());
     }
 }

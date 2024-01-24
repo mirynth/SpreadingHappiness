@@ -13,7 +13,7 @@ public abstract class AbstractHappyState : AbstractMagicalGirlState
 			magicalGirl.transform.position + Vector3.up * 0.5f, 
 			Quaternion.identity);
 
-        LaunchProjectiles(projectileObject, direction, force, BulletType.Boba);
+        LaunchProjectiles(projectileObject, direction, force, BulletType.Boba, new BobaPatternDoNothing());
 	}
 
 }
