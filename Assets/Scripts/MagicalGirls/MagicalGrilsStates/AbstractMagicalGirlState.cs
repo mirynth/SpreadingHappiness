@@ -15,20 +15,6 @@ public abstract class AbstractMagicalGirlState
     // Time to wait between 2 shots in seconds.
     public abstract float CooldownTimeBeforeShooting {get;}
 	
-    public enum BulletType
-    {
-        None,
-        Boba,
-        Wrath,
-        Sloth,
-        Pride,
-        Envy,
-        Lust,
-        Gluttony,
-        Greed
-    }
-	
-	private double tempAngleConversion;
 	protected AbstractMagicalGirlController magicalGirl;
 	
 	// ************************************************************************
@@ -40,25 +26,33 @@ public abstract class AbstractMagicalGirlState
 	}
 
     // ************************************************************************
-    
+
+    // Converts an angle in degrees into a vector pointing at that angle from origin (in °, 0° = right)
+    protected static Vector2 AngleToVector(float angleDeg)
+    {
+		float angleRad = angleDeg*Mathf.Deg2Rad;
+        return new Vector2(
+            (float)Math.Cos(angleRad),
+            (float)Math.Sin(angleRad)
+        ).normalized;
+    }
+
     // Shoot in an angle (in °, 0° = shooting right)
-    protected void ShootStraight(float angle, float force, BulletType bulletType)
-	{
-		tempAngleConversion = angle*Math.PI/180;
-		ShootStraight(new Vector2((float)Math.Cos(tempAngleConversion), 
-							(float)Math.Sin(tempAngleConversion)),
-						force, bulletType);
-	}
+    protected void ShootBulletAtAngle(float angle, float initialDistance, BulletType bulletType, AbstractBobaPattern movePattern)
+    {
+        Vector2 initialPosition = magicalGirl.transform.position + ((Vector3)AngleToVector(angle) * initialDistance);
+        LaunchProjectile(bulletType, initialPosition, movePattern);
+    }
 	
-    protected void ShootInCircle(float force, BulletType bulletType)
+    protected void ShootInCircle(float speed, BulletType bulletType, float instantiation_radius = 0.5f)
     {
         for(int i = 0; i <= 7; i++)
         {
-            ShootStraight(45*i, force, bulletType);
+            ShootBulletAtAngle(45 * i, instantiation_radius, bulletType, new BobaPatternSimpleMove(AngleToVector(45 * i), speed));
         }
     }
 
-    protected void ShootWave(float force, BulletType bulletType)
+    protected void ShootWave(BulletType bulletType)
     {
         // The shoot function should be a lot more sophisticated
         // but as an example we will shoot boba in a wave
@@ -67,13 +61,9 @@ public abstract class AbstractMagicalGirlState
         this.barrage_count += 1;
         if (this.barrage_count > 30) { return; }
 
-        // Create the projectile
-        GameObject projectileObject = GameObject.Instantiate(magicalGirl.enemyBulletPrefab,
-            magicalGirl.rigid2d.position + Vector2.up * 0.5f,
-            Quaternion.identity);
+        AbstractBobaPattern pattern = new BobaPatternWave(Vector2.left, magicalGirl.transform.position, 4.0f * this.shoot_up, 4.0f, 20.0f);
 
-        AbstractBobaPattern pattern = new BobaPatternWave(Vector2.left, projectileObject.transform.position, 4.0f * this.shoot_up, 4.0f, 20.0f);
-        LaunchProjectiles(projectileObject, Vector2.left, force, bulletType, pattern);
+        LaunchProjectile(bulletType, magicalGirl.transform.position, pattern);
 
 
         /*
@@ -87,7 +77,7 @@ public abstract class AbstractMagicalGirlState
         this.shoot_up *= -1.0f;
     }
 
-    protected void ShootMissile(float force, BulletType bulletType)
+    protected void ShootMissile(BulletType bulletType)
     {
         // as another example we will shoot a missile boba
 
@@ -95,15 +85,9 @@ public abstract class AbstractMagicalGirlState
         this.barrage_count += 1;
         if (this.barrage_count > 6) { return; }
 
-        // Create projectile
-        GameObject projectileObject = GameObject.Instantiate(magicalGirl.enemyBulletPrefab,
-            magicalGirl.rigid2d.position + Vector2.up * 0.5f,
-            Quaternion.identity);
-        //EnemyBulletController projectile = projectileObject.GetComponent<EnemyBulletController>();
-
         // Get the main character (through a singleton, sorry!)
         Rigidbody2D main_character_rigidbody = MainCharacterController.instance.GetComponent<Rigidbody2D>();
-        Vector2 dir_to_main_character = (main_character_rigidbody.transform.position - projectileObject.transform.position).normalized;
+        Vector2 dir_to_main_character = (main_character_rigidbody.transform.position - magicalGirl.transform.position).normalized;
 
         // launch dir will be ~70 degrees off from dir_to_main_character
         Vector2 launch_dir = Vector2.MoveTowards(
@@ -111,17 +95,6 @@ public abstract class AbstractMagicalGirlState
             Vector2.Perpendicular(dir_to_main_character) * this.shoot_up,
             Mathf.Sin(70.0f)
         ).normalized;
-
-        // Create and set the projectile move pattern
-        /*
-        projectile.SetPattern(new BobaPatternLaunchedMissile(
-            main_character_rigidbody,
-            launch_dir,
-            8.0f,
-            1.0f,
-            20.0f,
-            1.0f
-        ));*/
 
         AbstractBobaPattern pattern = new BobaPatternLaunchedMissile(
             main_character_rigidbody,
@@ -131,31 +104,22 @@ public abstract class AbstractMagicalGirlState
             20.0f,
             1.0f
         );
-        LaunchProjectiles(projectileObject, launch_dir, force, bulletType, pattern);
 
+        LaunchProjectile(bulletType, magicalGirl.transform.position, pattern);
 
         // fix to flip direction each time we shoot.
         this.shoot_up *= -1.0f;
     }
     // ************************************************************************
 
-    protected void LaunchProjectiles(GameObject projectileObject, Vector2 direction, float force, BulletType bulletType, AbstractBobaPattern pattern)
+    // Instantiate and launch a projectile of the given type from the given initial position and with the given movement pattern
+    protected void LaunchProjectile(BulletType bulletType, Vector2 initialPosition, AbstractBobaPattern pattern)
     {
-        switch(bulletType)
-        {
-            case BulletType.Boba:
-                BobaBitController bobaProjectile = projectileObject.GetComponent<BobaBitController>();
-                bobaProjectile.Launch(direction, force);
-                bobaProjectile.SetPattern(pattern);
-                break;
-            case BulletType.Wrath:
-                EnemyBulletController wrathProjectile = projectileObject.GetComponent<EnemyBulletController>();
-                wrathProjectile.Launch(direction, force);
-                wrathProjectile.SetPattern(pattern);
-                break;
-        }
-        
+        GameObject projectileObject = GameObject.Instantiate(
+            GameManager.Instance.ConvertBulletTypeToPrefab(bulletType),
+            initialPosition,
+            Quaternion.identity);
+
+        projectileObject.GetComponent<AbstractProjectileController>().SetPattern(pattern);
     }
-	// Shoot in a specific direction
-	public abstract void ShootStraight(Vector2 direction, float force, BulletType bulletType);
 }

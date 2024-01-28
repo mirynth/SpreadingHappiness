@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fcac3cd90e8da2e45998e0a5a2c06468
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - bulletBobaPrefab: {fileID: 7619055656009917487, guid: ccbf5382d19089c47ae09e2aff369442,
+      type: 3}
+  - bulletWrathPrefab: {fileID: 1182745761348386897, guid: dddbfc9ca32328642908730676ed64e3,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

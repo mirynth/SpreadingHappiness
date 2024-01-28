@@ -20,10 +20,6 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
     protected AbstractAngryState angryState;
 	protected AbstractHappyState happyState;
 
-	// Please set in editor
-	public GameObject enemyBulletPrefab;
-	public GameObject bobaBitPrefab;
-
 	// we're using a State DP. Each state has 2 methods: Move() and Shoot()
 	// Happy States will be shooting good bullets to help the MC
 	// Angry States will be shooting stuff for the MC to avoid
