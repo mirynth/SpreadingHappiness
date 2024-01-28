@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1869136345048440789}
   - component: {fileID: 4745038805450650592}
-  - component: {fileID: 7225075890013868468}
   - component: {fileID: 3792804340901741338}
+  - component: {fileID: 262458762295397175}
   m_Layer: 6
   m_Name: MagicalGirlPlHappyStart
   m_TagString: Untagged
@@ -86,24 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7225075890013868468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941520856137459764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eea614639470de4b846a046728d5bff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigid2d: {fileID: 0}
-  isAngryAtStart: 0
-  enemyBulletPrefab: {fileID: 1182745761348386897, guid: dddbfc9ca32328642908730676ed64e3,
-    type: 3}
-  bobaBitPrefab: {fileID: 7619055656009917487, guid: ccbf5382d19089c47ae09e2aff369442,
-    type: 3}
 --- !u!50 &3792804340901741338
 Rigidbody2D:
   serializedVersion: 4
@@ -131,3 +113,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &262458762295397175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941520856137459764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e54f4035741ba54f8b184301609448a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAngryAtStart: 0
+  happyType: 0
+  angryType: 0
+  rigid2d: {fileID: 0}

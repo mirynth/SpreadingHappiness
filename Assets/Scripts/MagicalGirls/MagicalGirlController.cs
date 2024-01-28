@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// The abstract mother magical girl class.
-// All magical girls inherit from this
-public abstract class AbstractMagicalGirlController : MonoBehaviour
+public class MagicalGirlController : MonoBehaviour
 {
-	public bool isAngryAtStart;
+	[SerializeField] public bool isAngryAtStart;
+
+	[SerializeField] protected MagicalGirlTypeEnums.AngryMagicalGirlTypes angryType;
+	[SerializeField] protected MagicalGirlTypeEnums.HappyMagicalGirlTypes happyType;
 	
 	private float cooldownShootingTimer;
     private float directionChangeInterval = 5f;
@@ -31,9 +32,14 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
 	// ************************************************************************
 	
 	// Constructor
-	public AbstractMagicalGirlController() : base()
+	public MagicalGirlController() : base()
 	{
-		float cooldownShootingTimer = 0;		
+		angryState = MagicalGirlTypeEnums.ConvertAngryType(this.angryType, this);
+		happyState = MagicalGirlTypeEnums.ConvertHappyType(this.happyType, this);
+
+		if (isAngryAtStart)
+			magicalGirlState = angryState;
+		else magicalGirlState = happyState;
 	}	
 	
 	// ************************************************************************
@@ -46,11 +52,6 @@ public abstract class AbstractMagicalGirlController : MonoBehaviour
 		// Resets the firing cooldown.
 		cooldownShootingTimer = magicalGirlState.CooldownTimeBeforeShooting;
 	}
-
-    public virtual void Move()
-    {
-    }
-
 
     void ChangeDirection()
     {

@@ -15,12 +15,12 @@ public abstract class AbstractMagicalGirlState
     // Time to wait between 2 shots in seconds.
     public abstract float CooldownTimeBeforeShooting {get;}
 	
-	protected AbstractMagicalGirlController magicalGirl;
+	protected MagicalGirlController magicalGirl;
 	
 	// ************************************************************************
 	
 	public AbstractMagicalGirlState(
-		AbstractMagicalGirlController mg)
+		MagicalGirlController mg)
 	{
 		this.magicalGirl = mg;
 	}

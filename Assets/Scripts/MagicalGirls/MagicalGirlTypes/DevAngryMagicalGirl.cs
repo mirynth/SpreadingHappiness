@@ -8,7 +8,7 @@ public class DevAngryMagicalGirl : AbstractAngryState
 {
 	public override float CooldownTimeBeforeShooting {get {return 0.05f;}}
 
-	public DevAngryMagicalGirl(AbstractMagicalGirlController mg) : base(mg)
+	public DevAngryMagicalGirl(MagicalGirlController mg) : base(mg)
 	{}
 
 	

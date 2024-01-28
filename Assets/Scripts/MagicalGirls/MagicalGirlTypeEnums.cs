@@ -6,7 +6,7 @@ public class MagicalGirlTypeEnums
 		BasicHappyMagicalGirl,
 	}
 
-	public static AbstractHappyState ConvertHappyType(HappyMagicalGirlTypes type, AbstractMagicalGirlController controller)
+	public static AbstractHappyState ConvertHappyType(HappyMagicalGirlTypes type, MagicalGirlController controller)
 	{
 		switch (type)
 		{
@@ -24,7 +24,7 @@ public class MagicalGirlTypeEnums
 		DevAngryMagicalGirl,
 	}
 
-	public static AbstractAngryState ConvertAngryType(AngryMagicalGirlTypes type, AbstractMagicalGirlController controller)
+	public static AbstractAngryState ConvertAngryType(AngryMagicalGirlTypes type, MagicalGirlController controller)
 	{
 		switch (type)
 		{
