@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3171967094829165439}
   - component: {fileID: -2136431254669042090}
   - component: {fileID: 4224250986516262573}
+  - component: {fileID: 4871993979044482748}
+  - component: {fileID: 1650496184334443823}
   m_Layer: 6
   m_Name: MagicalGirlPlAngryStart
   m_TagString: Untagged
@@ -126,6 +128,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAngryAtStart: 1
-  happyType: 0
-  angryType: 0
-  rigid2d: {fileID: 0}
+--- !u!114 &4871993979044482748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8893561570452640744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 664e49a31b875124696f44e0663ae89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1650496184334443823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8893561570452640744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d77060a06329ac4cbc1c38cbe48cc64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

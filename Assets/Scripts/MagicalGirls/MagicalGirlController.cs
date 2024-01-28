@@ -6,9 +6,6 @@ public class MagicalGirlController : MonoBehaviour
 {
 	[SerializeField] public bool isAngryAtStart;
 
-	[SerializeField] protected MagicalGirlTypeEnums.AngryMagicalGirlTypes angryType;
-	[SerializeField] protected MagicalGirlTypeEnums.HappyMagicalGirlTypes happyType;
-	
 	private float cooldownShootingTimer;
     private float directionChangeInterval = 5f;
     private float directionTimer = 5f;
@@ -27,20 +24,7 @@ public class MagicalGirlController : MonoBehaviour
 	protected AbstractMagicalGirlState magicalGirlState;
 	
 	// Rigidbody2D. Do not set in Editor.
-	public Rigidbody2D rigid2d;
-	
-	// ************************************************************************
-	
-	// Constructor
-	public MagicalGirlController() : base()
-	{
-		angryState = MagicalGirlTypeEnums.ConvertAngryType(this.angryType, this);
-		happyState = MagicalGirlTypeEnums.ConvertHappyType(this.happyType, this);
-
-		if (isAngryAtStart)
-			magicalGirlState = angryState;
-		else magicalGirlState = happyState;
-	}	
+	private Rigidbody2D rigid2d;
 	
 	// ************************************************************************
 	
@@ -59,6 +43,16 @@ public class MagicalGirlController : MonoBehaviour
         y_angle = UnityEngine.Random.Range(-180, 180);
     }
     // ************************************************************************
+
+	public void Awake()
+	{
+		angryState = GetComponent<AbstractAngryState>();
+		happyState = GetComponent<AbstractHappyState>();
+
+		if (isAngryAtStart)
+			magicalGirlState = angryState;
+		else magicalGirlState = happyState;
+	}
 
     // Start is called before the first frame update
     void Start()

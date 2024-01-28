@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractMagicalGirlState
+public abstract class AbstractMagicalGirlState : MonoBehaviour
 {
     // ---- Init variables ---- //
     float shoot_up = 1.0f;
@@ -19,10 +19,9 @@ public abstract class AbstractMagicalGirlState
 	
 	// ************************************************************************
 	
-	public AbstractMagicalGirlState(
-		MagicalGirlController mg)
+	public void Awake()
 	{
-		this.magicalGirl = mg;
+		this.magicalGirl = GetComponent<MagicalGirlController>();
 	}
 
     // ************************************************************************

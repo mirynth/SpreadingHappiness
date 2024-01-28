@@ -7,10 +7,6 @@ using UnityEngine;
 public class DevAngryMagicalGirl : AbstractAngryState
 {
 	public override float CooldownTimeBeforeShooting {get {return 0.05f;}}
-
-	public DevAngryMagicalGirl(MagicalGirlController mg) : base(mg)
-	{}
-
 	
     // to-do: have these functions take cooldown time as a parameter
     //public override void Shoot(){ ShootMissileExample(); }
