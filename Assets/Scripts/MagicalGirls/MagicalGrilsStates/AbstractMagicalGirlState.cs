@@ -35,19 +35,12 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
             (float)Math.Sin(angleRad)
         ).normalized;
     }
-
-    // Shoot in an angle (in °, 0° = shooting right)
-    protected void ShootBulletAtAngle(float angle, float initialDistance, BulletType bulletType, AbstractBobaPattern movePattern)
-    {
-        Vector2 initialPosition = magicalGirl.transform.position + ((Vector3)AngleToVector(angle) * initialDistance);
-        LaunchProjectile(bulletType, initialPosition, movePattern);
-    }
 	
-    protected void ShootInCircle(float speed, BulletType bulletType, float instantiation_radius = 0.5f)
+    protected void ShootInCircle(float speed, BulletType bulletType)
     {
         for(int i = 0; i <= 7; i++)
         {
-            ShootBulletAtAngle(45 * i, instantiation_radius, bulletType, new BobaPatternSimpleMove(AngleToVector(45 * i), speed));
+            LaunchProjectile(bulletType, new BobaPatternSimpleMove(AngleToVector(45 * i), speed));
         }
     }
 
@@ -62,7 +55,7 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
 
         AbstractBobaPattern pattern = new BobaPatternWave(Vector2.left, magicalGirl.transform.position, 4.0f * this.shoot_up, 4.0f, 20.0f);
 
-        LaunchProjectile(bulletType, magicalGirl.transform.position, pattern);
+        LaunchProjectile(bulletType, pattern);
 
 
         /*
@@ -104,7 +97,7 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
             1.0f
         );
 
-        LaunchProjectile(bulletType, magicalGirl.transform.position, pattern);
+        LaunchProjectile(bulletType, pattern);
 
         // fix to flip direction each time we shoot.
         this.shoot_up *= -1.0f;
@@ -112,11 +105,15 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
     // ************************************************************************
 
     // Instantiate and launch a projectile of the given type from the given initial position and with the given movement pattern
-    protected void LaunchProjectile(BulletType bulletType, Vector2 initialPosition, AbstractBobaPattern pattern)
+    protected void LaunchProjectile(BulletType bulletType, AbstractBobaPattern pattern)
+    {
+        LaunchProjectile(bulletType, pattern, magicalGirl.transform.position);
+    }
+    protected void LaunchProjectile(BulletType bulletType, AbstractBobaPattern pattern, Vector2 instantiation_position)
     {
         GameObject projectileObject = GameObject.Instantiate(
             GameManager.Instance.ConvertBulletTypeToPrefab(bulletType),
-            initialPosition,
+            instantiation_position,
             Quaternion.identity);
 
         projectileObject.GetComponent<AbstractProjectileController>().SetPattern(pattern);
