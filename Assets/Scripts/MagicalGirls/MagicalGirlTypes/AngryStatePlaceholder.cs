@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AngryStatePlaceholder : AbstractAngryState
+{
+	public override float CooldownTimeBeforeShooting {get {return 0.05f;}}
+
+	public AngryStatePlaceholder(AbstractMagicalGirlController mg) : base(mg)
+	{}
+
+	
+    // to-do: have these functions take cooldown time as a parameter
+    //public override void Shoot(){ ShootMissileExample(); }
+    //public override void Shoot(){ ShootWaveExample(); }
+	//public override void Shoot(){this.ShootInCircle(10.0f, BulletType.Wrath);}
+	public override void Shoot(){this.ShootMissile(BulletType.Wrath);}
+
+	//public override void Move(){}
+}
