@@ -46,6 +46,8 @@ public class MagicalGirlController : MonoBehaviour
 
 	public void Awake()
 	{
+		// The Magical girl unity-object should also have one
+		// angry state component and one happy state component
 		angryState = GetComponent<AbstractAngryState>();
 		happyState = GetComponent<AbstractHappyState>();
 

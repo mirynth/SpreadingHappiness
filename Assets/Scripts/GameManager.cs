@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     
+    // Prefabs which represent each bullet type
     public GameObject bulletBobaPrefab;
     public GameObject bulletWrathPrefab;
     
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
         GameManager.Instance = this;
     }
 
+    // Converts an enum bullet type to the prefab
     public GameObject ConvertBulletTypeToPrefab(BulletType bulletType)
     {
         switch (bulletType)
