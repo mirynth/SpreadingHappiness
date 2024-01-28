@@ -6,8 +6,8 @@ public class MagicalGirlPlaceholderController : AbstractMagicalGirlController
 {
 	public MagicalGirlPlaceholderController () : base()
 	{
-		angryState = new AngryStatePlaceholder(this);
-		happyState = new HappyStatePlaceholder(this);
+		angryState = new DevAngryMagicalGirl(this);
+		happyState = new BasicHappyMagicalGirl(this);
 		if (isAngryAtStart)
 			magicalGirlState = angryState;
 		else magicalGirlState = happyState;

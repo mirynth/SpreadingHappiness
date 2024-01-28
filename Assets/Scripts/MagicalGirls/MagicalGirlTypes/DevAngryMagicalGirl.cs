@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AngryStatePlaceholder : AbstractAngryState
+// This magical girl type is used in development to test various shooting mechanics.
+// This magical girl type should not be used in the final game.
+public class DevAngryMagicalGirl : AbstractAngryState
 {
 	public override float CooldownTimeBeforeShooting {get {return 0.05f;}}
 
-	public AngryStatePlaceholder(AbstractMagicalGirlController mg) : base(mg)
+	public DevAngryMagicalGirl(AbstractMagicalGirlController mg) : base(mg)
 	{}
 
 	
