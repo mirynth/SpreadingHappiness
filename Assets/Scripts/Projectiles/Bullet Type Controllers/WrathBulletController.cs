@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBulletController : AbstractProjectileController
+public class WrathBulletController : AbstractProjectileController
 {
 	public override void OnCollisionEffect(MainCharacterController e)
 	{
