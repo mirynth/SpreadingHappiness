@@ -45,16 +45,11 @@ namespace UI
 				return;
 			}
 
-			StartTextAnimation(newBobaTotal);
-		}
-
-		#region Text Animation
-
-		private void StartTextAnimation(int newBobaTotal)
-		{
 			StopAllCoroutines();
 			StartCoroutine(TextAnimation(newBobaTotal));
 		}
+
+		#region Text Animation
 
 		private IEnumerator TextAnimation(int newBobaTotal)
 		{
