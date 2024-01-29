@@ -9,7 +9,6 @@ namespace UI
 		[SerializeField] private TMP_Text bobaCountText;
 		[SerializeField, Range(0.1f, 20f), Tooltip("How quickly the text animates when the boba count is updated")] private float textAnimationSpeedScale = 10f;
 		[SerializeField, Range(1f, 20f), Tooltip("How high the text jumps when the boba count is updated")] private float textAnimationHeight = 10f;
-		private Coroutine textAnimationRoutine;
 		private float textDefaultPositionY;
 
 		private void Awake()
@@ -53,14 +52,8 @@ namespace UI
 
 		private void StartTextAnimation(int newBobaTotal)
 		{
-			if (textAnimationRoutine != null)
-			{
-				//If the animation is already playing, stop it
-				StopCoroutine(textAnimationRoutine);
-			}
-
-			//Start the jump animation coroutine
-			textAnimationRoutine = StartCoroutine(TextAnimation(newBobaTotal));
+			StopAllCoroutines();
+			StartCoroutine(TextAnimation(newBobaTotal));
 		}
 
 		private IEnumerator TextAnimation(int newBobaTotal)
@@ -95,9 +88,6 @@ namespace UI
 				bobaCountText.rectTransform.anchoredPosition = textPositionContainer;
 				yield return null;
 			}
-
-			//Set this coroutine to null to avoid calling StopCoroutine unnecessarily in the StartTextAnimation function
-			textAnimationRoutine = null;
 		}
 
 		#endregion
