@@ -54,18 +54,15 @@ namespace UI
 		private IEnumerator TextAnimation(int newBobaTotal)
 		{
 			float lerpValue = 0f;
-			//textPositionX is created here just to make the code easier to read, it saves us from having to write "bobaCountText.rectTransform.anchoredPosition.x" several times
 			float textPositionX = bobaCountText.rectTransform.anchoredPosition.x;
-			//textJumpPositionY is the target position for the text when it reaches the top of its jump
-			float textJumpPositionY = textDefaultPositionY + textAnimationHeight;
-			//textPositionContainer is the container for the text's new position in the current iteration of the loop
-			Vector2 textPositionContainer = new Vector2(textPositionX, textDefaultPositionY);
-			//Set the text's position to be its default position before starting the animation
+			float textJumpPositionY = textDefaultPositionY + textAnimationHeight; //Text position at the top of the jump
+			Vector2 textPositionContainer = new Vector2(textPositionX, textDefaultPositionY); //Using this Vector2 to update the text position in the loops
 			bobaCountText.rectTransform.anchoredPosition = textPositionContainer;
-			//This while loop raises the text up to the desired jump position
+
+			//Raise the text up to the desired jump position
 			while (lerpValue < 1f)
 			{
-				lerpValue = Mathf.Clamp01(lerpValue + Time.deltaTime * textAnimationSpeedScale);
+				lerpValue = Mathf.Clamp01(lerpValue + Time.unscaledDeltaTime * textAnimationSpeedScale);
 				textPositionContainer.Set(textPositionX, Mathf.Lerp(textDefaultPositionY, textJumpPositionY, lerpValue));
 				bobaCountText.rectTransform.anchoredPosition = textPositionContainer;
 				yield return null;
@@ -75,10 +72,10 @@ namespace UI
 			bobaCountText.text = newBobaTotal.ToString();
 
 			lerpValue = 0f;
-			//This while loop brings the text back down to its original position
+			//Bring the text back down to its original position
 			while (lerpValue < 1f)
 			{
-				lerpValue = Mathf.Clamp01(lerpValue + Time.deltaTime * textAnimationSpeedScale);
+				lerpValue = Mathf.Clamp01(lerpValue + Time.unscaledDeltaTime * textAnimationSpeedScale);
 				textPositionContainer.Set(textPositionX, Mathf.Lerp(textJumpPositionY, textDefaultPositionY, lerpValue));
 				bobaCountText.rectTransform.anchoredPosition = textPositionContainer;
 				yield return null;
