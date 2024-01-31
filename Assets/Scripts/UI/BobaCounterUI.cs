@@ -10,6 +10,7 @@ namespace UI
 		[SerializeField, Range(0.1f, 20f), Tooltip("How quickly the text animates when the boba count is updated")] private float textAnimationSpeedScale = 10f;
 		[SerializeField, Range(1f, 20f), Tooltip("How high the text jumps when the boba count is updated")] private float textAnimationHeight = 10f;
 		private float textDefaultPositionY;
+		private int localBobaTotal;
 
 		private void Awake()
 		{
@@ -45,6 +46,7 @@ namespace UI
 				return;
 			}
 
+			bobaCountText.text = localBobaTotal.ToString();
 			StopAllCoroutines();
 			StartCoroutine(TextAnimation(newBobaTotal));
 		}
@@ -58,7 +60,7 @@ namespace UI
 			float textJumpPositionY = textDefaultPositionY + textAnimationHeight; //Text position at the top of the jump
 			Vector2 textPositionContainer = new Vector2(textPositionX, textDefaultPositionY); //Using this Vector2 to update the text position in the loops
 			bobaCountText.rectTransform.anchoredPosition = textPositionContainer;
-
+			localBobaTotal = newBobaTotal;
 			//Raise the text up to the desired jump position
 			while (lerpValue < 1f)
 			{
