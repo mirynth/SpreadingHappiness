@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI;
 using UnityEditor;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ public class MainCharacterController : MonoBehaviour
 
     float horizontal;
     float vertical;
+
+    public MainCharacterUpgrades upgrades;
 
     // ************************************************************************
     private void Awake()
@@ -106,8 +109,11 @@ public class MainCharacterController : MonoBehaviour
    	
    public void IncrementBobaBitCount()
    {
-	   BobaBits++;   	
-   }
+	    BobaBits++;
+        //After changing the boba amount, fire the OnPlayerBobaCountChanged event
+        UIEvents.OnPlayerBobaCountChanged(BobaBits);
+        upgrades.BobaChanged(BobaBits);
+    }
    
    // ************************************************************************
    	
