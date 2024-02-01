@@ -8,4 +8,9 @@ public class BobaBitController : AbstractProjectileController
 	{
 			e.IncrementBobaBitCount();		
 	}
+
+    public override void Proxy_Destroy()
+    {
+		Pools.Instance().bobaBitPool.DestroyPoolable(this);
+    }
 }

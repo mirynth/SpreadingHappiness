@@ -9,11 +9,11 @@ public abstract class AbstractHappyState : AbstractMagicalGirlState
 	// Shoot in a specific direction
 	public override void ShootStraight(Vector2 direction, float force, BulletType bulletType)
 	{
-		GameObject projectileObject = GameObject.Instantiate(magicalGirl.bobaBitPrefab, 
-			magicalGirl.transform.position + Vector3.up * 0.5f, 
-			Quaternion.identity);
+        BobaBitController projectile = Pools.Instance().bobaBitPool.CreatePoolable();
+        projectile.transform.SetPositionAndRotation(magicalGirl.rigid2d.position + Vector2.up * 0.5f, Quaternion.identity);
 
-        LaunchProjectiles(projectileObject, direction, force, BulletType.Boba, new BobaPatternDoNothing());
+
+        LaunchProjectiles(projectile.gameObject, direction, force, BulletType.Boba, new BobaPatternDoNothing());
 	}
 
 }

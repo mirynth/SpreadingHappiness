@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractProjectileController : MonoBehaviour
+public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 {	
 	Rigidbody2D rigidbody2d;
 	AbstractBobaPattern pattern = new BobaPatternDoNothing();
@@ -20,7 +20,7 @@ public abstract class AbstractProjectileController : MonoBehaviour
 	{
 		if(transform.position.magnitude > 1000.0f)
 		{
-			Destroy(gameObject);
+            Proxy_Destroy();
 		}
 	}
 
@@ -54,11 +54,40 @@ public abstract class AbstractProjectileController : MonoBehaviour
 		if (e != null)
 		{
 			OnCollisionEffect(e);
-			Destroy(gameObject);
+            Proxy_Destroy();
 		}
 	}
 	
 	// Called during a collision.
 	public abstract void OnCollisionEffect(MainCharacterController e);
+
+	//Proxy Destroy lets us use the Concrete Class to recycle the Pooled Instance instead of actually Destroying it.
+	public abstract void Proxy_Destroy();
+
+    public void OnPooled()
+    {
+		//Show in Heirarchy
+        gameObject.hideFlags &= ~HideFlags.HideInHierarchy;
+    }
+
+    public void OnUnPooled()
+    {
+		//Hide in Hierarchy
+        gameObject.hideFlags |= HideFlags.HideInHierarchy;
+    }
+
+    public void OnPoolCreate()
+    {
+        gameObject.hideFlags |= HideFlags.HideInHierarchy;
+    }
+
+    public void OnPoolDestroy()
+    {
+    }
+
+    public void OnPoolReset()
+    {
+		gameObject.hideFlags |= HideFlags.HideInHierarchy;
+    }
 }
 

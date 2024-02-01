@@ -6,6 +6,11 @@ public class EnemyBulletController : AbstractProjectileController
 {
 	public override void OnCollisionEffect(MainCharacterController e)
 	{
-			e.TakeDamage();	
-	}
+			e.TakeDamage();
+    }
+
+    public override void Proxy_Destroy()
+    {
+        Pools.Instance().enemyBulletPool.DestroyPoolable(this);
+    }
 }

@@ -68,12 +68,11 @@ public abstract class AbstractMagicalGirlState
         if (this.barrage_count > 30) { return; }
 
         // Create the projectile
-        GameObject projectileObject = GameObject.Instantiate(magicalGirl.enemyBulletPrefab,
-            magicalGirl.rigid2d.position + Vector2.up * 0.5f,
-            Quaternion.identity);
+        EnemyBulletController projectile = Pools.Instance().enemyBulletPool.CreatePoolable();
+        projectile.transform.SetPositionAndRotation(magicalGirl.rigid2d.position + Vector2.up * 0.5f, Quaternion.identity);
 
-        AbstractBobaPattern pattern = new BobaPatternWave(Vector2.left, projectileObject.transform.position, 4.0f * this.shoot_up, 4.0f, 20.0f);
-        LaunchProjectiles(projectileObject, Vector2.left, force, bulletType, pattern);
+        AbstractBobaPattern pattern = new BobaPatternWave(Vector2.left, projectile.gameObject.transform.position, 4.0f * this.shoot_up, 4.0f, 20.0f);
+        LaunchProjectiles(projectile.gameObject, Vector2.left, force, bulletType, pattern);
 
 
         /*
@@ -96,14 +95,13 @@ public abstract class AbstractMagicalGirlState
         if (this.barrage_count > 6) { return; }
 
         // Create projectile
-        GameObject projectileObject = GameObject.Instantiate(magicalGirl.enemyBulletPrefab,
-            magicalGirl.rigid2d.position + Vector2.up * 0.5f,
-            Quaternion.identity);
-        //EnemyBulletController projectile = projectileObject.GetComponent<EnemyBulletController>();
+        EnemyBulletController projectile = Pools.Instance().enemyBulletPool.CreatePoolable();
+        projectile.transform.SetPositionAndRotation(magicalGirl.rigid2d.position + Vector2.up * 0.5f, Quaternion.identity);
+
 
         // Get the main character (through a singleton, sorry!)
         Rigidbody2D main_character_rigidbody = MainCharacterController.instance.GetComponent<Rigidbody2D>();
-        Vector2 dir_to_main_character = (main_character_rigidbody.transform.position - projectileObject.transform.position).normalized;
+        Vector2 dir_to_main_character = (main_character_rigidbody.transform.position - projectile.gameObject.transform.position).normalized;
 
         // launch dir will be ~70 degrees off from dir_to_main_character
         Vector2 launch_dir = Vector2.MoveTowards(
@@ -131,7 +129,7 @@ public abstract class AbstractMagicalGirlState
             20.0f,
             1.0f
         );
-        LaunchProjectiles(projectileObject, launch_dir, force, bulletType, pattern);
+        LaunchProjectiles(projectile.gameObject, launch_dir, force, bulletType, pattern);
 
 
         // fix to flip direction each time we shoot.
