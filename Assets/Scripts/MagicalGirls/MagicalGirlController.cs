@@ -9,9 +9,10 @@ public class MagicalGirlController : MonoBehaviour
 	private float cooldownShootingTimer;
     private float directionChangeInterval = 5f;
     private float directionTimer = 5f;
-    private float movementSpeed = 0.01f;
-    private int x_angle = 0;
-    private int y_angle = 0;
+    private float movementSpeed = 500f;//0.01f;
+    private int x_dir = 1;
+    private int y_dir = 1;
+    private Vector2 randomVector;
 
     // Each magical girl type has one angrystate and one happystate
     // that inherit from these two abstract classes.
@@ -37,10 +38,11 @@ public class MagicalGirlController : MonoBehaviour
 		cooldownShootingTimer = magicalGirlState.CooldownTimeBeforeShooting;
 	}
 
-    void ChangeDirection()
+    Vector2 ChangeDirection()
     {
-        x_angle = UnityEngine.Random.Range(-180, 180);
-        y_angle = UnityEngine.Random.Range(-180, 180);
+        int randomAngle = Mathf.RoundToInt(Random.Range(0, 360));
+        Vector2 newVector = new Vector2(Mathf.Cos(randomAngle) * Mathf.Deg2Rad, Mathf.Sin(randomAngle) * Mathf.Deg2Rad);
+        return newVector;
     }
     // ************************************************************************
 
@@ -66,7 +68,7 @@ public class MagicalGirlController : MonoBehaviour
 			magicalGirlState = angryState;
 		else magicalGirlState = happyState;
 
-        ChangeDirection();
+        randomVector = ChangeDirection();
         directionTimer = directionChangeInterval;
     }
 
@@ -82,14 +84,25 @@ public class MagicalGirlController : MonoBehaviour
 			magicalGirlState.Shoot();
 			cooldownShootingTimer += magicalGirlState.CooldownTimeBeforeShooting;
 		}
+        
+        // Bounds Reached
+        
+        if (this.transform.position.x < -37 || this.transform.position.x > 37)
+            x_dir *= -1;
+        if (this.transform.position.y  < -20  || this.transform.position.y > 20)
+            y_dir *= -1;
+            
+ 
+        this.transform.position += new Vector3(x_dir*randomVector.x , y_dir*randomVector.y , 0) * movementSpeed * Time.deltaTime;
+        //this.transform.position *= new Vector3(x_delta, y_delta, 1);
 
-        this.transform.position += new Vector3(1 * x_angle, 1 * y_angle, 1) * movementSpeed * Time.deltaTime;
 
         directionTimer -= Time.deltaTime;
         if(directionTimer <= 0)
         {
-            ChangeDirection();
+            randomVector = ChangeDirection();
             directionTimer = directionChangeInterval;
         }
+
     }
 }
