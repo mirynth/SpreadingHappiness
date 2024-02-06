@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UI;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MainCharacterController : MonoBehaviour
 {
@@ -40,9 +41,6 @@ public class MainCharacterController : MonoBehaviour
    // Update is called once per frame
    void Update()
    {
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
-
         // Create a direction vector from the horizontal and vertical inputs
         Vector2 direction = new Vector2(horizontal, vertical);
 
@@ -120,5 +118,12 @@ public class MainCharacterController : MonoBehaviour
    public void TakeDamage()
    {
 	   // TODO To be determined
+   }
+
+   public void OnMoveInput(InputAction.CallbackContext context)
+   {
+	   Vector2 movementVector = context.ReadValue<Vector2>();
+	   horizontal = movementVector.x;
+	   vertical = movementVector.y;
    }
 }
