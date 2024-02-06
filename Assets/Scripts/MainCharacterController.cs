@@ -14,7 +14,7 @@ public class MainCharacterController : MonoBehaviour
 	
 	public float hSpeed = 10.0f;
 	public float vSpeed = 10.0f;
-    bool strafeModeOn = false;
+
     CircleCollider2D hitboxCollider;
     SpriteRenderer hitboxRenderer;
 
