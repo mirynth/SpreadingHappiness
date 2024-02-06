@@ -58,11 +58,6 @@ public class MainCharacterController : MonoBehaviour
         //position.x = position.x + hSpeed * horizontal * Time.deltaTime;
         //position.y = position.y + vSpeed * vertical * Time.deltaTime;
         
-        // Apply strafe when LeftShift is held down
-        if (Input.GetKeyDown(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift)))
-        {
-            toggleStrafe();
-        }
         //Debug.Log("current speed: " + hSpeed);
 		
 		// TODO: This throws a ref not set exception
@@ -81,30 +76,7 @@ public class MainCharacterController : MonoBehaviour
     }*/
 
    // ************************************************************************
-	
-   void toggleStrafe()
-   {
-        if(strafeModeOn)
-        {
-            hSpeed = 10.0f;
-            vSpeed = 10.0f;
-            hitboxCollider.radius = 2;
-            hitboxRenderer.enabled = false;
-            strafeModeOn = false;
-        }
-        else
-        {
-            hSpeed = 5.0f;
-            vSpeed = 5.0f;
-            hitboxCollider.radius = 0.01f;
-            hitboxRenderer.enabled = true;
-            strafeModeOn = true;
-        }
-        Debug.Log("strafe status: " + strafeModeOn);
-   }
-   
-   // ************************************************************************
-   	
+
    public void IncrementBobaBitCount()
    {
 	    BobaBits++;
@@ -125,5 +97,23 @@ public class MainCharacterController : MonoBehaviour
 	   Vector2 movementVector = context.ReadValue<Vector2>();
 	   horizontal = movementVector.x;
 	   vertical = movementVector.y;
+   }
+
+   public void OnStrafeInput(InputAction.CallbackContext context)
+   {
+	   if (context.performed)
+	   {
+		   hSpeed = 5.0f;
+		   vSpeed = 5.0f;
+		   hitboxCollider.radius = 0.01f;
+		   hitboxRenderer.enabled = true;
+	   }
+	   else if (context.canceled)
+	   {
+		   hSpeed = 10.0f;
+		   vSpeed = 10.0f;
+		   hitboxCollider.radius = 2;
+		   hitboxRenderer.enabled = false;
+	   }
    }
 }

@@ -1212,6 +1212,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0984f39c-7082-4ec3-9a27-0737b1651558
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/XInputControllerWindows/leftStick,/XInputControllerWindows/dpad]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bb5671e4-2e02-4944-b3a1-8f35f029ba1e
+    m_ActionName: Player/Pause[/Keyboard/escape,/XInputControllerWindows/start]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 595791721}
+        m_TargetAssemblyTypeName: MainCharacterController, Assembly-CSharp
+        m_MethodName: OnStrafeInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b77eb09d-38f3-412c-acf4-81f26ba53ec5
+    m_ActionName: Player/Start Strafe[/Keyboard/shift,/XInputControllerWindows/rightShoulder]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
