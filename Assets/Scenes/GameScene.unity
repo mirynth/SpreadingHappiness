@@ -1211,7 +1211,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8196068155242656052, guid: 8b07d6772396a6c40b2d8d4a07825978, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1956568274515334026, guid: 8b07d6772396a6c40b2d8d4a07825978,
@@ -1761,6 +1762,11 @@ PrefabInstance:
         type: 3}
       propertyPath: bulletInterval
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7225075890013868468, guid: 11529c13972f92842b55b2b5e5960dac,
+        type: 3}
+      propertyPath: isAngryAtStart
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7225075890013868468, guid: 11529c13972f92842b55b2b5e5960dac,
         type: 3}
@@ -3182,6 +3188,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2107416421}
   - {fileID: 482479195}
   - {fileID: 595791713}
   - {fileID: 956093715}

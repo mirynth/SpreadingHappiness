@@ -33,12 +33,9 @@ public abstract class AbstractProjectileController : MonoBehaviour
 	}
 
 	// ************************************************************************
-	public void Launch(Vector2 direction, float force)
+	public void SimpleLaunch(Vector2 direction, float force)
 	{
-		// disable boba patterns when doing a simple launch
-		this.SetPattern(new BobaPatternDoNothing());
-
-		GetComponent<Rigidbody2D>().AddForce(direction * force);
+		this.SetPattern(new BobaPatternSimpleMove(direction, force));
 	}
 
 	// ************************************************************************
