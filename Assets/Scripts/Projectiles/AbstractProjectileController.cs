@@ -2,18 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
 public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 {	
 	Rigidbody2D rigidbody2d;
 	AbstractBobaPattern pattern = new BobaPatternDoNothing();
+	AbstractProjectileEffect effect = null;
 
 	//projectiles will be destroyed if they are destruction_radius away form MainCharacter
-	float destruction_radius = 75.0f;
+	[SerializeField] float destruction_radius = 75.0f;
 	float destruction_check_timer = 0.0f;
-	float destruction_check_interval = 1.5f;
+	[SerializeField] float destruction_check_interval = 1.5f;
 	//Timeout is a countdown based on destruction_check_timer 
-	int timeout_countdown = 0;
-	int timeout_interval = 10;
+	int timeout_countdown = 0;	
+	[SerializeField] int timeout_interval = 15;
+
 
 	// Start is called before the first frame update
 	void Start()
@@ -70,20 +74,30 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 	
 	// ************************************************************************
 	
+	public void SetEffect(AbstractProjectileEffect effect)
+	{
+		this.effect = effect;
+
+		if(effect != null)
+		{
+			effect.ApplyVisual(this);
+		}
+	}
+
 	// Destroy the projectile on collision
 	void OnCollisionEnter2D(Collision2D other)
 	{
 		MainCharacterController e = other.collider.GetComponent<MainCharacterController>();
 		if (e != null)
 		{
-			OnCollisionEffect(e);
+			if (effect != null)
+			{
+				effect.OnCollision(this, e);
+			}
             Proxy_Destroy();
 		}
 	}
 	
-	// Called during a collision.
-	public abstract void OnCollisionEffect(MainCharacterController e);
-
     //Proxy Destroy lets us use the Concrete Class to recycle the Pooled Instance instead of actually Destroying it.
     public abstract void Proxy_Destroy();
 

@@ -17,14 +17,11 @@ public class Pools
             instance = new Pools();
 
             //cache the resource.load instead of searching every Instantiation.
-            instance.obj_bobabit = Resources.Load<GameObject>("Prefabs/BobaBit 1");
-            instance.obj_wrath_proj = Resources.Load<GameObject>("Prefabs/EnemyBullet");
+            instance.obj_projectile_base = Resources.Load<GameObject>("Prefabs/ProjectileObject");
 
             //Create & Setup the object pools
-            instance.bobaBitPool = new();
-            instance.bobaBitPool.Initialize(128, () => { return GameObject.Instantiate(instance.obj_bobabit).GetComponent<BobaBitController>(); });
-            instance.wrathBulletPool = new();
-            instance.wrathBulletPool.Initialize(128, () => { return GameObject.Instantiate(instance.obj_wrath_proj).GetComponent<WrathBulletController>(); });
+            instance.projectilePool = new();
+            instance.projectilePool.Initialize(256, () => { return GameObject.Instantiate(instance.obj_projectile_base).GetComponent<ProjectileController>(); });
         }
         return instance;
     }
@@ -33,17 +30,14 @@ public class Pools
     {
         if (instance != null)
         {
-            instance.bobaBitPool.Destroy();
-            instance.wrathBulletPool.Destroy();
+            instance.projectilePool.Destroy();
             instance = null;
         }
     }
 
-    GameObject obj_bobabit;
-    GameObject obj_wrath_proj;
+    GameObject obj_projectile_base;
 
     //Pools for objects here.
-    public ObjectPool<BobaBitController> bobaBitPool;
-    public ObjectPool<WrathBulletController> wrathBulletPool;
+    public ObjectPool<ProjectileController> projectilePool;
 
 }

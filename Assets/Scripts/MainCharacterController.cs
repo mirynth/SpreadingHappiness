@@ -107,9 +107,9 @@ public class MainCharacterController : MonoBehaviour
    
    // ************************************************************************
    	
-   public void IncrementBobaBitCount()
+   public void IncrementBobaBitCount(int value = 1)
    {
-	    BobaBits++;
+	    BobaBits += value;
         //After changing the boba amount, fire the OnPlayerBobaCountChanged event
         UIEvents.OnPlayerBobaCountChanged(BobaBits);
         upgrades.BobaChanged(BobaBits);
@@ -117,7 +117,7 @@ public class MainCharacterController : MonoBehaviour
    
    // ************************************************************************
    	
-   public void TakeDamage()
+   public void TakeDamage(int value = 1)
    {
 	   // TODO To be determined
    }

@@ -27,12 +27,15 @@ public class GameManager : MonoBehaviour
     // Converts an enum bullet type to the prefab
     public GameObject CreatePoolableFromBulletType(BulletType bulletType)
     {
+        GameObject obj = Pools.Instance().projectilePool.CreatePoolable().gameObject;
         switch (bulletType)
         {
             case BulletType.Boba:
-                return Pools.Instance().bobaBitPool.CreatePoolable().gameObject;
+                obj.GetComponent<AbstractProjectileController>().SetEffect(new BobaBulletEffect());
+                break;
             case BulletType.Wrath:
-                return Pools.Instance().wrathBulletPool.CreatePoolable().gameObject;
+                obj.GetComponent<AbstractProjectileController>().SetEffect(new WrathBulletEffect());
+                break;
             case BulletType.Sloth:
                 // @TODO: create this bullet type
             case BulletType.Pride:
@@ -46,5 +49,6 @@ public class GameManager : MonoBehaviour
             default: 
                 return null;
         }
+        return obj;
     }
 }

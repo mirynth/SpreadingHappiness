@@ -103,8 +103,5 @@ public class MagicalGirlController : MonoBehaviour
             randomVector = ChangeDirection();
             directionTimer = directionChangeInterval;
         }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-            Debug.Log(Pools.Instance().wrathBulletPool.ActiveCount() + "|" + Pools.Instance().bobaBitPool.ActiveCount());
     }
 }
