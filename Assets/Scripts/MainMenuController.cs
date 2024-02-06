@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+	[SerializeField] private Selectable firstSelected;
     Resolution[] resolution;
 
     private void Start()
@@ -18,6 +20,10 @@ public class MainMenuController : MonoBehaviour
             Screen.fullScreen = false;
         else
             Screen.fullScreen = true;
+        if (firstSelected != null)
+        {
+	        firstSelected.Select();
+        }
     }
     
     public void PlayGame()
