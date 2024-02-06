@@ -11,7 +11,7 @@ public abstract class AbstractProjectileController : MonoBehaviour
 	void Start()
 	{
 		rigidbody2d = GetComponent<Rigidbody2D>();
-		Destroy(this.gameObject, 20f);
+		//Destroy(this.gameObject, 20f);
 	}
 	
 	// ************************************************************************
