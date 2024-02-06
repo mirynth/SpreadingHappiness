@@ -11,9 +11,9 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 	float destruction_radius = 75.0f;
 	float destruction_check_timer = 0.0f;
 	float destruction_check_interval = 1.5f;
-	//Suicide is a countdown based on destruction_check_timer 
-	int suicide_countdown = 0;
-	int suicide_interval = 10;
+	//Timeout is a countdown based on destruction_check_timer 
+	int timeout_countdown = 0;
+	int timeout_interval = 10;
 
 	// Start is called before the first frame update
 	void Start()
@@ -38,9 +38,9 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 		if(destruction_check_timer <= 0.0f )
 		{
 			destruction_check_timer += destruction_check_interval;
-			suicide_countdown--;
+			timeout_countdown--;
 
-			if (suicide_countdown <= 0)
+			if (timeout_countdown <= 0)
 			{
 				Proxy_Destroy();
 			}
@@ -91,7 +91,7 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
     {
         //Show in Heirarchy
         gameObject.hideFlags &= ~HideFlags.HideInHierarchy;
-		suicide_countdown = suicide_interval;
+		timeout_countdown = timeout_interval;
 		destruction_check_timer = destruction_check_interval;
     }
 
