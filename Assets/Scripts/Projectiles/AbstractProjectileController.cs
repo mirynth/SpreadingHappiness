@@ -10,7 +10,8 @@ public abstract class AbstractProjectileController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		rigidbody2d = GetComponent<Rigidbody2D>();       
+		rigidbody2d = GetComponent<Rigidbody2D>();
+		Destroy(this.gameObject, 20f);
 	}
 	
 	// ************************************************************************
@@ -18,16 +19,17 @@ public abstract class AbstractProjectileController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if(transform.position.magnitude > 1000.0f)
-		{
-			Destroy(gameObject);
-		}
+		
 	}
 
 	// ************************************************************************
 	private void FixedUpdate()
 	{
 		this.pattern.onFixedUpdate(this.rigidbody2d);
+		if(this.transform.position.magnitude > 1000.0f)
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	// ************************************************************************
