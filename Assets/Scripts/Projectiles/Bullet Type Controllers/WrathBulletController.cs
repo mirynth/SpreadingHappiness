@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBulletController : AbstractProjectileController
+public class WrathBulletController : AbstractProjectileController
 {
 	public override void OnCollisionEffect(MainCharacterController e)
 	{
-			e.TakeDamage();
-    }
+			e.TakeDamage();	
+	}
 
     public override void Proxy_Destroy()
     {
-        Pools.Instance().enemyBulletPool.DestroyPoolable(this);
+        Pools.Instance().wrathBulletPool.DestroyPoolable(this);
     }
 }

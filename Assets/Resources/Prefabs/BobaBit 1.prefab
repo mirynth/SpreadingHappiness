@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4104975843038276166}
   - component: {fileID: 3646432204360424388}
   - component: {fileID: 2949279654504719481}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BobaBit 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -22.33, y: 1.24, z: 0}
-  m_LocalScale: {x: 0.1655736, y: 0.1655736, z: 0.1655736}
+  m_LocalScale: {x: 0.165, y: 0.165, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

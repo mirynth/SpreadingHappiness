@@ -6,11 +6,19 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 {	
 	Rigidbody2D rigidbody2d;
 	AbstractBobaPattern pattern = new BobaPatternDoNothing();
-	
+
+	//projectiles will be destroyed if they are destruction_radius away form MainCharacter
+	float destruction_radius = 75.0f;
+	float destruction_check_timer = 0.0f;
+	float destruction_check_interval = 1.5f;
+	//Suicide is a countdown based on destruction_check_timer 
+	int suicide_countdown = 0;
+	int suicide_interval = 10;
+
 	// Start is called before the first frame update
 	void Start()
 	{
-		rigidbody2d = GetComponent<Rigidbody2D>();       
+		rigidbody2d = GetComponent<Rigidbody2D>();
 	}
 	
 	// ************************************************************************
@@ -18,25 +26,40 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 	// Update is called once per frame
 	void Update()
 	{
-		if(transform.position.magnitude > 1000.0f)
-		{
-            Proxy_Destroy();
-		}
+		
 	}
 
 	// ************************************************************************
 	private void FixedUpdate()
 	{
 		this.pattern.onFixedUpdate(this.rigidbody2d);
+		
+		destruction_check_timer -= Time.fixedDeltaTime;
+		if(destruction_check_timer <= 0.0f )
+		{
+			destruction_check_timer += destruction_check_interval;
+			suicide_countdown--;
+
+			if (suicide_countdown <= 0)
+			{
+				Proxy_Destroy();
+			}
+
+			if(MainCharacterController.instance != null)
+			{
+				if(Vector3.Distance(MainCharacterController.instance.transform.position, transform.position) > destruction_radius)
+				{
+					Proxy_Destroy();
+				}
+			}
+			
+		}
 	}
 
 	// ************************************************************************
-	public void Launch(Vector2 direction, float force)
+	public void SimpleLaunch(Vector2 direction, float force)
 	{
-		// disable boba patterns when doing a simple launch
-		this.SetPattern(new BobaPatternDoNothing());
-
-		GetComponent<Rigidbody2D>().AddForce(direction * force);
+		this.SetPattern(new BobaPatternSimpleMove(direction, force));
 	}
 
 	// ************************************************************************
@@ -61,18 +84,20 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 	// Called during a collision.
 	public abstract void OnCollisionEffect(MainCharacterController e);
 
-	//Proxy Destroy lets us use the Concrete Class to recycle the Pooled Instance instead of actually Destroying it.
-	public abstract void Proxy_Destroy();
+    //Proxy Destroy lets us use the Concrete Class to recycle the Pooled Instance instead of actually Destroying it.
+    public abstract void Proxy_Destroy();
 
     public void OnPooled()
     {
-		//Show in Heirarchy
+        //Show in Heirarchy
         gameObject.hideFlags &= ~HideFlags.HideInHierarchy;
+		suicide_countdown = suicide_interval;
+		destruction_check_timer = destruction_check_interval;
     }
 
     public void OnUnPooled()
     {
-		//Hide in Hierarchy
+        //Hide in Hierarchy
         gameObject.hideFlags |= HideFlags.HideInHierarchy;
     }
 
@@ -87,7 +112,7 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 
     public void OnPoolReset()
     {
-		gameObject.hideFlags |= HideFlags.HideInHierarchy;
+        gameObject.hideFlags |= HideFlags.HideInHierarchy;
     }
 }
 

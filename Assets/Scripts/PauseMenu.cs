@@ -11,10 +11,6 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        //Initialize/Reinitialize object pools
-        //This is the closest place to a GameManager or StageManager.
-        Pools.Clean();
-
         Resume();
     }
     

@@ -11,6 +11,6 @@ public class BobaBitController : AbstractProjectileController
 
     public override void Proxy_Destroy()
     {
-		Pools.Instance().bobaBitPool.DestroyPoolable(this);
+        Pools.Instance().bobaBitPool.DestroyPoolable(this);
     }
 }
