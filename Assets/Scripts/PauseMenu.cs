@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] private Selectable firstSelected;
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject SettingsMenuUI;
@@ -42,6 +44,10 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        if (firstSelected != null)
+        {
+            firstSelected.Select();
+        }
     }
 
     public void LoadMenu()
