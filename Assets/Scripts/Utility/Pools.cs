@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /*
  * Access with Pools.Instance().pool_type.Func()
@@ -15,6 +16,7 @@ public class Pools
         if (instance == null)
         {
             instance = new Pools();
+            SceneManager.activeSceneChanged += ChangedActiveScene;
 
             //cache the resource.load instead of searching every Instantiation.
             instance.obj_projectile_base = Resources.Load<GameObject>("Prefabs/ProjectileObject");
@@ -24,6 +26,12 @@ public class Pools
             instance.projectilePool.Initialize(256, () => { return GameObject.Instantiate(instance.obj_projectile_base).GetComponent<ProjectileController>(); });
         }
         return instance;
+    }
+
+    static void ChangedActiveScene(Scene a, Scene b)
+    {
+        Clean();
+        SceneManager.activeSceneChanged -= ChangedActiveScene;
     }
 
     public static void Clean()
