@@ -215,6 +215,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5449204803438452664, guid: b335d741bddc2624aa82ade11aeea071,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449204803438452664, guid: b335d741bddc2624aa82ade11aeea071,
+        type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449204803438452664, guid: b335d741bddc2624aa82ade11aeea071,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449204803438452664, guid: b335d741bddc2624aa82ade11aeea071,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 6937462420295438478, guid: b335d741bddc2624aa82ade11aeea071,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3271,7 +3291,6 @@ SceneRoots:
   - {fileID: 455158209}
   - {fileID: 1180152724}
   - {fileID: 1733604655}
-  - {fileID: 3378559732535850783}
   - {fileID: 1896350552}
   - {fileID: 1646233821}
   - {fileID: 1064011444}
