@@ -88,8 +88,12 @@ public class ObjectPool<Type> where Type: MonoBehaviour, IPoolable
 
         foreach (Type t in m_active)
         {
-            t.OnPoolDestroy();
-            GameObject.Destroy(t.gameObject);
+                t.OnPoolDestroy();
+                if(t.gameObject != null)
+                {
+                    GameObject.Destroy(t.gameObject);
+                }
+                        
         }
         foreach(Type t in m_inactive)
         {
