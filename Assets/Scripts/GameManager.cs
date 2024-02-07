@@ -45,7 +45,8 @@ public class GameManager : MonoBehaviour
             case BulletType.Lust:
                 // @TODO: create this bullet type
             case BulletType.Greed:
-                // @TODO: create this bullet type
+                obj.GetComponent<AbstractProjectileController>().SetEffect(new GreedBulletEffect(0.25f, 12.0f, 4.0f));
+                break;
             default: 
                 return null;
         }

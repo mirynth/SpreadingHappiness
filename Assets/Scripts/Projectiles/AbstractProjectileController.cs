@@ -30,7 +30,9 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 	// Update is called once per frame
 	void Update()
 	{
-		
+		if (effect != null)
+			effect.Update();
+
 	}
 
 	// ************************************************************************
@@ -76,6 +78,12 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 	
 	public void SetEffect(AbstractProjectileEffect effect)
 	{
+		//Cleanup last visual (Incase we use animation for some projectiles etc)
+		if(effect != null)
+		{
+			effect.RemoveVisual(this);
+		}
+
 		this.effect = effect;
 
 		if(effect != null)

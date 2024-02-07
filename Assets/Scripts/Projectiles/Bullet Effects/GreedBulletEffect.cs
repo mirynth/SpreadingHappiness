@@ -5,9 +5,39 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class WrathBulletEffect : AbstractProjectileEffect
+/*
+ * Grows in size over time
+ * */
+public class GreedBulletEffect : AbstractProjectileEffect
 {
     static Sprite cached_sprite = null;
+
+    float starting_size_multiplier = 1.0f;
+    float final_size_multiplier = 5.0f;
+    float current_size = 0.0f;
+    float base_size = 0.53f;
+
+    float size_growth_timer = 5.0f;
+    float size_growth_counter = 0.0f;
+    AbstractProjectileController parent;
+
+    public GreedBulletEffect(float starting_size, float final_size, float growth_time)
+    {
+        starting_size_multiplier = starting_size;
+        final_size_multiplier = final_size;
+        current_size = starting_size;
+
+        size_growth_timer = growth_time;
+        size_growth_counter = growth_time;
+    }
+
+    public override void Update()
+    {
+        size_growth_counter = Mathf.Max(0, size_growth_counter - Time.deltaTime);
+        current_size = starting_size_multiplier + ((final_size_multiplier - starting_size_multiplier) * (1.0f - (size_growth_counter / size_growth_timer)));
+
+        parent.transform.localScale = Vector3.one * current_size;
+    }
 
     Sprite GetVisualSprite()
     {
@@ -18,6 +48,7 @@ public class WrathBulletEffect : AbstractProjectileEffect
 
     public override void ApplyVisual(AbstractProjectileController parent_controller)
     {
+        parent = parent_controller;
         parent_controller.GetComponent<SpriteRenderer>().enabled = true;
         parent_controller.GetComponent<CircleCollider2D>().enabled = true;
 
