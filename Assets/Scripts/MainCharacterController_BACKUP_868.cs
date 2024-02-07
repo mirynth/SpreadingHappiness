@@ -76,8 +76,36 @@ public class MainCharacterController : MonoBehaviour
     }*/
 
    // ************************************************************************
+<<<<<<< HEAD
+
+   public void IncrementBobaBitCount()
+=======
 	
+   void toggleStrafe()
+   {
+        if(strafeModeOn)
+        {
+            hSpeed = 10.0f;
+            vSpeed = 10.0f;
+            hitboxCollider.radius = 2;
+            hitboxRenderer.enabled = false;
+            strafeModeOn = false;
+        }
+        else
+        {
+            hSpeed = 5.0f;
+            vSpeed = 5.0f;
+            hitboxCollider.radius = 0.01f;
+            hitboxRenderer.enabled = true;
+            strafeModeOn = true;
+        }
+        Debug.Log("strafe status: " + strafeModeOn);
+   }
+   
+   // ************************************************************************
+   	
    public void IncrementBobaBitCount(int value = 1)
+>>>>>>> master
    {
 	    BobaBits += value;
         //After changing the boba amount, fire the OnPlayerBobaCountChanged event

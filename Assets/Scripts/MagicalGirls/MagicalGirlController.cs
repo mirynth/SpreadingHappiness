@@ -103,6 +103,5 @@ public class MagicalGirlController : MonoBehaviour
             randomVector = ChangeDirection();
             directionTimer = directionChangeInterval;
         }
-
     }
 }
