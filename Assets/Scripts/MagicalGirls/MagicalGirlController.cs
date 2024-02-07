@@ -84,15 +84,14 @@ public class MagicalGirlController : MonoBehaviour
 			magicalGirlState.Shoot();
 			cooldownShootingTimer += magicalGirlState.CooldownTimeBeforeShooting;
 		}
-        
+
         // Bounds Reached
-        
-        if (this.transform.position.x < -37 || this.transform.position.x > 37)
+        if (this.transform.position.x < -80 || this.transform.position.x > 80)
             x_dir *= -1;
-        if (this.transform.position.y  < -20  || this.transform.position.y > 20)
+        if (this.transform.position.y < -40 || this.transform.position.y > 40)
             y_dir *= -1;
-            
- 
+
+
         this.transform.position += new Vector3(x_dir*randomVector.x , y_dir*randomVector.y , 0) * movementSpeed * Time.deltaTime;
         //this.transform.position *= new Vector3(x_delta, y_delta, 1);
 
