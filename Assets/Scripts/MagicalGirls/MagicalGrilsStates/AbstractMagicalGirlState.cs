@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class AbstractMagicalGirlState : MonoBehaviour
@@ -69,7 +70,7 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
         this.shoot_up *= -1.0f;
     }
 
-    protected void ShootMissile(BulletType bulletType)
+    protected void ShootMissile(BulletType bulletType, float speed = 8.0f, float home_speed = 20.0f, float max_turning_rate = 1.0f)
     {
         // as another example we will shoot a missile boba
 
@@ -91,10 +92,10 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
         AbstractBobaPattern pattern = new BobaPatternLaunchedMissile(
             main_character_rigidbody,
             launch_dir,
-            8.0f,
+            speed,
             1.0f,
-            20.0f,
-            1.0f
+            home_speed,
+            max_turning_rate
         );
 
         LaunchProjectile(bulletType, pattern);
@@ -111,10 +112,8 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
     }
     protected void LaunchProjectile(BulletType bulletType, AbstractBobaPattern pattern, Vector2 instantiation_position)
     {
-        GameObject projectileObject = GameObject.Instantiate(
-            GameManager.Instance.ConvertBulletTypeToPrefab(bulletType),
-            instantiation_position,
-            Quaternion.identity);
+        GameObject projectileObject = GameManager.Instance.CreatePoolableFromBulletType(bulletType);
+        projectileObject.transform.SetPositionAndRotation(instantiation_position, Quaternion.identity);
 
         projectileObject.GetComponent<AbstractProjectileController>().SetPattern(pattern);
     }

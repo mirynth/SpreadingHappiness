@@ -17,25 +17,25 @@ public enum BulletType
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    
-    // Prefabs which represent each bullet type
-    public GameObject bulletBobaPrefab;
-    public GameObject bulletWrathPrefab;
-    
+
     private void Awake()
     {
         GameManager.Instance = this;
+        Pools.Clean();
     }
 
     // Converts an enum bullet type to the prefab
-    public GameObject ConvertBulletTypeToPrefab(BulletType bulletType)
+    public GameObject CreatePoolableFromBulletType(BulletType bulletType)
     {
+        GameObject obj = Pools.Instance().projectilePool.CreatePoolable().gameObject;
         switch (bulletType)
         {
             case BulletType.Boba:
-                return bulletBobaPrefab;
+                obj.GetComponent<AbstractProjectileController>().SetEffect(new BobaBulletEffect());
+                break;
             case BulletType.Wrath:
-                return bulletWrathPrefab;
+                obj.GetComponent<AbstractProjectileController>().SetEffect(new WrathBulletEffect());
+                break;
             case BulletType.Sloth:
                 // @TODO: create this bullet type
             case BulletType.Pride:
@@ -45,9 +45,11 @@ public class GameManager : MonoBehaviour
             case BulletType.Lust:
                 // @TODO: create this bullet type
             case BulletType.Greed:
-                // @TODO: create this bullet type
+                obj.GetComponent<AbstractProjectileController>().SetEffect(new GreedBulletEffect(0.25f, 12.0f, 4.0f));
+                break;
             default: 
                 return null;
         }
+        return obj;
     }
 }
