@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /*
  * Access with Pools.Instance().pool_type.Func()
@@ -15,6 +16,7 @@ public class Pools
         if (instance == null)
         {
             instance = new Pools();
+            SceneManager.activeSceneChanged += ChangedActiveScene;
 
             //cache the resource.load instead of searching every Instantiation.
             instance.obj_bobabit = Resources.Load<GameObject>("Prefabs/BobaBit 1");
@@ -27,6 +29,12 @@ public class Pools
             instance.wrathBulletPool.Initialize(128, () => { return GameObject.Instantiate(instance.obj_wrath_proj).GetComponent<WrathBulletController>(); });
         }
         return instance;
+    }
+
+    static void ChangedActiveScene(Scene a, Scene b)
+    {
+        Clean();
+        SceneManager.activeSceneChanged -= ChangedActiveScene;
     }
 
     public static void Clean()
