@@ -7,6 +7,13 @@ using TMPro;
 
 public class TimeManager : MonoBehaviour
 {
+    public static TimeManager Instance()
+    {
+        return instance;
+    }
+
+    static TimeManager instance;
+
     public static Action OnMinuteChanged;
 
     public TMP_Text text;
@@ -17,12 +24,14 @@ public class TimeManager : MonoBehaviour
     private float minuteToRealTime = 60f;
     private float seconds;
 
-    void Start()
+    private void Awake()
     {
+        instance = this;
         Minute = 0;
         seconds = 0;
         text.text = "0:00";
     }
+
 
     void Update()
     {
@@ -41,5 +50,16 @@ public class TimeManager : MonoBehaviour
         }
         //text.SetText($"{0:00} : {1:00}", Minute, seconds);
         text.text = Minute.ToString() + ":" + seconds.ToString("00");
+    }
+
+    public void SetPause(bool pause)
+    {
+        this.enabled = !pause;
+    }
+
+    public void Reset()
+    {
+        Minute = 0;
+        seconds = 0;
     }
 }

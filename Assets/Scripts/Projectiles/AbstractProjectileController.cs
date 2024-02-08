@@ -14,9 +14,9 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 	[SerializeField] float destruction_radius = 75.0f;
 	float destruction_check_timer = 0.0f;
 	[SerializeField] float destruction_check_interval = 1.5f;
-	//Timeout is a countdown based on destruction_check_timer 
-	int timeout_countdown = 0;	
-	[SerializeField] int timeout_interval = 15;
+    //Timeout is a countdown based on destruction_check_timer 
+    public int timeout_countdown = 0;	
+	[SerializeField] public int timeout_interval = 15;
 
 
 	// Start is called before the first frame update
@@ -32,7 +32,6 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 	{
 		if (effect != null)
 			effect.Update();
-
 	}
 
 	// ************************************************************************
@@ -78,18 +77,17 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
 	
 	public void SetEffect(AbstractProjectileEffect effect)
 	{
-		//Cleanup last visual (Incase we use animation for some projectiles etc)
-		if(effect != null)
-		{
-			effect.RemoveVisual(this);
-		}
-
 		this.effect = effect;
 
 		if(effect != null)
 		{
 			effect.ApplyVisual(this);
 		}
+	}
+
+	public bool HasEffect()
+	{
+		return effect != null;
 	}
 
 	// Destroy the projectile on collision
@@ -121,6 +119,11 @@ public abstract class AbstractProjectileController : MonoBehaviour, IPoolable
     {
         //Hide in Hierarchy
         gameObject.hideFlags |= HideFlags.HideInHierarchy;
+        if (effect != null)
+        {
+            effect.RemoveVisual(this);
+			effect = null;
+        }
     }
 
     public void OnPoolCreate()

@@ -15,7 +15,6 @@ public class GreedBulletEffect : AbstractProjectileEffect
     float starting_size_multiplier = 1.0f;
     float final_size_multiplier = 5.0f;
     float current_size = 0.0f;
-    float base_size = 0.53f;
 
     float size_growth_timer = 5.0f;
     float size_growth_counter = 0.0f;
@@ -56,6 +55,9 @@ public class GreedBulletEffect : AbstractProjectileEffect
         //Exact image radius is 0.53, but shaving a bit off works better visually.
         parent_controller.GetComponent<CircleCollider2D>().radius = 0.45f;
         parent_controller.transform.localScale = Vector3.one;
+
+        //Slower bullet needs a longer timeout.
+        parent_controller.timeout_countdown = parent_controller.timeout_interval * 3;
     }
 
     public override void RemoveVisual(AbstractProjectileController parent_controller)

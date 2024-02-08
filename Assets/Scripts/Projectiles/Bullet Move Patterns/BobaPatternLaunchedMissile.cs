@@ -8,6 +8,7 @@ public class BobaPatternLaunchedMissile : AbstractBobaPattern
     {
         LaunchState,
         HomingState,
+        LinearState
     }
 
     Rigidbody2D target;
@@ -61,8 +62,11 @@ public class BobaPatternLaunchedMissile : AbstractBobaPattern
                 homing_delay_current -= Time.fixedDeltaTime;
                 if (homing_delay_current < -4.0f)
                 {
-                    UnityEngine.MonoBehaviour.Destroy(boba_body.gameObject);
+                    missile_state = MissileState.LinearState;
                 }
+                break;
+            case MissileState.LinearState:
+                boba_body.MovePosition((Vector2)boba_body.transform.position + this.velocity * Time.fixedDeltaTime);
                 break;
         }
     }

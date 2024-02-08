@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public abstract class AbstractMagicalGirlState : MonoBehaviour
+public abstract class AbstractMagicalGirlState 
 {
     // ---- Init variables ---- //
     float shoot_up = 1.0f;
@@ -14,15 +14,17 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
     public abstract void Shoot();
 
     // Time to wait between 2 shots in seconds.
-    public abstract float CooldownTimeBeforeShooting {get;}
-	
-	protected MagicalGirlController magicalGirl;
+    public abstract float CooldownTimeBeforeShooting {get; }
+    public abstract void ApplyVisual(MagicalGirlController parent_controller);
+    public abstract void RemoveVisual(MagicalGirlController parent_controller);
+
+    protected MagicalGirlController magicalGirl;
 	
 	// ************************************************************************
 	
-	public void Awake()
+	public void Initialize(MagicalGirlController parent)
 	{
-		this.magicalGirl = GetComponent<MagicalGirlController>();
+		this.magicalGirl = parent;
 	}
 
     // ************************************************************************

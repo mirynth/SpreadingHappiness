@@ -1,11 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicalGirlController : MonoBehaviour
+public class MagicalGirlController : MonoBehaviour, IPoolable
 {
-	[SerializeField] public bool isAngryAtStart;
-
 	private float cooldownShootingTimer;
     private float directionChangeInterval = 5f;
     private float directionTimer = 5f;
@@ -26,7 +25,8 @@ public class MagicalGirlController : MonoBehaviour
 	
 	// Rigidbody2D. Do not set in Editor.
 	private Rigidbody2D rigid2d;
-	
+    [NonSerialized] public SpriteRenderer magical_girl_renderable;
+
 	// ************************************************************************
 	
 	public void TurnHappy()
@@ -40,33 +40,34 @@ public class MagicalGirlController : MonoBehaviour
 
     Vector2 ChangeDirection()
     {
-        int randomAngle = Mathf.RoundToInt(Random.Range(0, 360));
+        int randomAngle = Mathf.RoundToInt(UnityEngine.Random.Range(0, 360));
         Vector2 newVector = new Vector2(Mathf.Cos(randomAngle) * Mathf.Deg2Rad, Mathf.Sin(randomAngle) * Mathf.Deg2Rad);
         return newVector;
     }
     // ************************************************************************
 
 	public void Awake()
-	{
-		// The Magical girl unity-object should also have one
-		// angry state component and one happy state component
-		angryState = GetComponent<AbstractAngryState>();
-		happyState = GetComponent<AbstractHappyState>();
+    {
+        rigid2d = GetComponent<Rigidbody2D>();
+        magical_girl_renderable = GetComponentInChildren<SpriteRenderer>();
+    }
 
-		if (isAngryAtStart)
-			magicalGirlState = angryState;
-		else magicalGirlState = happyState;
-	}
-
-    // Start is called before the first frame update
     void Start()
     {
+    }
+
+    public void Setup(AbstractAngryState angry, AbstractHappyState happy, bool isAngry)
+    {
+        angryState = angry;
+        happyState = happy;
+
+        angry.Initialize(this);
+        happy.Initialize(this);
+
+        magicalGirlState = isAngry ? angryState : happyState;
+        magicalGirlState.ApplyVisual(this);
+
         cooldownShootingTimer = magicalGirlState.CooldownTimeBeforeShooting;
-        rigid2d = GetComponent<Rigidbody2D>();
-		
-		if (isAngryAtStart)
-			magicalGirlState = angryState;
-		else magicalGirlState = happyState;
 
         randomVector = ChangeDirection();
         directionTimer = directionChangeInterval;
@@ -102,5 +103,32 @@ public class MagicalGirlController : MonoBehaviour
             randomVector = ChangeDirection();
             directionTimer = directionChangeInterval;
         }
+    }
+
+    public void OnPooled()
+    {
+        //Show in Heirarchy
+        gameObject.hideFlags &= ~HideFlags.HideInHierarchy;
+    }
+
+    public void OnUnPooled()
+    {
+        //Hide in Hierarchy
+        gameObject.hideFlags |= HideFlags.HideInHierarchy;
+        magicalGirlState.RemoveVisual(this);
+    }
+
+    public void OnPoolCreate()
+    {
+        gameObject.hideFlags |= HideFlags.HideInHierarchy;
+    }
+
+    public void OnPoolDestroy()
+    {
+    }
+
+    public void OnPoolReset()
+    {
+        gameObject.hideFlags |= HideFlags.HideInHierarchy;
     }
 }
