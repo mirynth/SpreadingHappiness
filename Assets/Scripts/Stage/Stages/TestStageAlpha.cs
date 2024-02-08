@@ -70,7 +70,6 @@ public class TestStageAlpha : AbstractStage
                     GameManager.Instance.CreatePoolableFromMagicalGirl(new BasicAngryMagicalGirl(), new BasicHappyMagicalGirl(), true, new Vector3(-10, 10));
                     GameManager.Instance.CreatePoolableFromMagicalGirl(new BasicAngryMagicalGirl(), new BasicHappyMagicalGirl(), true, new Vector3(10, 10));
                 }));
-                gameplay_scripting.Enqueue(new(25.0f, () => { Debug.Log("25 Seconds"); }));
                 break;
             case StageState.VN_2:
                 TimeManager.Instance().SetPause(true);
@@ -79,7 +78,7 @@ public class TestStageAlpha : AbstractStage
             case StageState.Boss:
                 MainCharacterController.instance.transform.position = Vector3.zero;
                 gameplay_scripting.Enqueue(new(1.0f, () => {
-                    GameManager.Instance.CreatePoolableFromMagicalGirl(new BasicAngryMagicalGirl(), new BasicHappyMagicalGirl(), true, new Vector3(0, 10));
+                    GameManager.Instance.CreatePoolableFromMagicalGirl(new BasicBossMagicalGirl(), new BasicHappyMagicalGirl(), true, new Vector3(0, 10));
                 }));
                 break;
             case StageState.VN_Win:

@@ -46,6 +46,14 @@ public abstract class AbstractMagicalGirlState
             LaunchProjectile(bulletType, new BobaPatternSimpleMove(AngleToVector(45 * i), speed));
         }
     }
+    protected void ShootInCircle(float speed, BulletType bulletType, int count, int offset)
+    {
+        float angle = 360 / count;
+        for (int i = 0; i < count; i++)
+        {
+            LaunchProjectile(bulletType, new BobaPatternSimpleMove(AngleToVector(offset + (angle * i)), speed));
+        }
+    }
 
     protected void ShootWave(BulletType bulletType)
     {
@@ -72,13 +80,13 @@ public abstract class AbstractMagicalGirlState
         this.shoot_up *= -1.0f;
     }
 
-    protected void ShootMissile(BulletType bulletType, float speed = 8.0f, float home_speed = 20.0f, float max_turning_rate = 1.0f)
+    protected void ShootMissile(BulletType bulletType, float speed = 8.0f, float home_speed = 20.0f, float max_turning_rate = 1.0f, bool ignore_barrage = false)
     {
         // as another example we will shoot a missile boba
 
         // fix to create a barrage, we will need to create a better way to specify attack bursts.
         this.barrage_count += 1;
-        if (this.barrage_count > 6) { return; }
+        if (!ignore_barrage && this.barrage_count > 6) { return; }
 
         // Get the main character (through a singleton, sorry!)
         Rigidbody2D main_character_rigidbody = MainCharacterController.instance.GetComponent<Rigidbody2D>();
