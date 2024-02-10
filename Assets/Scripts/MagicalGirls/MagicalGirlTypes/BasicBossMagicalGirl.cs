@@ -47,6 +47,40 @@ public class BasicBossMagicalGirl : AbstractAngryState
         }
     }
 
+    float timer = 0.0f;
+    Vector3 start = Vector3.zero;
+    public override void Update()
+    {
+        timer += Time.deltaTime;
+
+        Vector3 movement = Vector3.zero;
+        if(timer < 12.5f)
+        {
+            movement = (Vector3.right + (Vector3.up * Mathf.Sin(timer)) );
+        } else if(timer < 25.0f)
+        {
+            movement = (Vector3.left + (Vector3.up * Mathf.Sin(timer)));
+        } else if(timer < 35.0f)
+        {
+            movement = (2 * Vector3.right + (2 * Vector3.up * Mathf.Sin(timer)));
+        }
+        else if (timer < 45.0f)
+        {
+            movement = (2 * Vector3.left + (3 * Vector3.up * Mathf.Sin(timer)));
+        }
+        else if(timer < 50.0f)
+        {
+            if(start == Vector3.zero)
+                start = magicalGirl.transform.position;
+
+            magicalGirl.transform.position = Vector3.Lerp(start, Vector3.zero, (5.0f - (50.0f - timer)) / 5.0f);
+        } else
+        {
+            magicalGirl.transform.position = Vector3.zero;
+        }
+        magicalGirl.transform.position += movement * Time.deltaTime;
+    }
+
     Sprite GetSprite()
     {
         if (renderable == null)

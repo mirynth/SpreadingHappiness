@@ -1035,7 +1035,7 @@ GameObject:
   - component: {fileID: 603784871}
   - component: {fileID: 603784870}
   m_Layer: 0
-  m_Name: Camera Bounds
+  m_Name: CameraBoundsStageConfine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1098,6 +1098,88 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603784869}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.8359749, y: 2.6119294, z: 3.790942}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &943904239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 943904241}
+  - component: {fileID: 943904240}
+  m_Layer: 0
+  m_Name: CameraBoundsBossConfine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!60 &943904240
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943904239}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 31.462957, y: 14.069868}
+      - {x: -27.786636, y: 14.20941}
+      - {x: -27.77172, y: -19.412247}
+      - {x: 1.3166436, y: -19.490475}
+      - {x: 31.25217, y: -19.226114}
+  m_UseDelaunayMesh: 0
+--- !u!4 &943904241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 943904239}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.8359749, y: 2.6119294, z: 3.790942}
@@ -1737,6 +1819,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3346187603565774616, guid: f540ff88b6723aa4cb9a89134c070400,
+        type: 3}
+      propertyPath: boss_bounds
+      value: 
+      objectReference: {fileID: 943904240}
+    - target: {fileID: 3346187603565774616, guid: f540ff88b6723aa4cb9a89134c070400,
+        type: 3}
+      propertyPath: stage_bounds
+      value: 
+      objectReference: {fileID: 603784870}
+    - target: {fileID: 3346187603565774616, guid: f540ff88b6723aa4cb9a89134c070400,
+        type: 3}
+      propertyPath: virtual_camera
+      value: 
+      objectReference: {fileID: 1012908978}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2737,3 +2834,4 @@ SceneRoots:
   - {fileID: 1294156872}
   - {fileID: 1012908979}
   - {fileID: 603784871}
+  - {fileID: 943904241}

@@ -29,6 +29,7 @@ public class TestStageAlpha : AbstractStage
                 TimeManager.Instance().SetPause(false);
                 break;
             case StageState.Boss:
+                GameManager.Instance.SetCameraBounds(GameManager.Instance.stage_bounds);
                 Pools.Instance().projectilePool.Reset();
                 Pools.Instance().magicalGirlPool.Reset();
                 break;
@@ -53,10 +54,13 @@ public class TestStageAlpha : AbstractStage
                 Debug.Log("Alpha Stage Start");
                 break;
             case StageState.VN_1:
+                GameManager.Instance.SetPlayerInputable(false);
                 TimeManager.Instance().SetPause(true);
                 VNManager.Instance().StartVN("TEST");
                 break;
             case StageState.Gameplay:
+                GameManager.Instance.SetPlayerInputable(true);
+                GameManager.Instance.SetCameraBounds(GameManager.Instance.stage_bounds);
                 gameplay_scripting.Clear();
                 gameplay_scripting.Enqueue(new(1.0f, () => { 
                     GameManager.Instance.CreatePoolableFromMagicalGirl(new BasicAngryMagicalGirl(), new BasicHappyMagicalGirl(), false, new Vector3(-10, -10));
@@ -72,10 +76,13 @@ public class TestStageAlpha : AbstractStage
                 }));
                 break;
             case StageState.VN_2:
+                GameManager.Instance.SetPlayerInputable(false);
                 TimeManager.Instance().SetPause(true);
                 VNManager.Instance().StartVN("TEST2");
                 break;
             case StageState.Boss:
+                GameManager.Instance.SetPlayerInputable(true);
+                GameManager.Instance.SetCameraBounds(GameManager.Instance.boss_bounds);
                 MainCharacterController.instance.transform.position = Vector3.zero;
                 gameplay_scripting.Enqueue(new(1.0f, () => {
                     GameManager.Instance.CreatePoolableFromMagicalGirl(new BasicBossMagicalGirl(), new BasicHappyMagicalGirl(), true, new Vector3(0, 10));

@@ -127,4 +127,9 @@ public abstract class AbstractMagicalGirlState
 
         projectileObject.GetComponent<AbstractProjectileController>().SetPattern(pattern);
     }
+
+    public virtual void Update()
+    {
+        magicalGirl.DefaultMove();
+    }
 }

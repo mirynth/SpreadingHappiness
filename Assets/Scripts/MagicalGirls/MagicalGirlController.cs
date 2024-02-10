@@ -13,6 +13,8 @@ public class MagicalGirlController : MonoBehaviour, IPoolable
     private int y_dir = 1;
     private Vector2 randomVector;
 
+    protected Vector2 bounds = new Vector2(80, 40);
+
     // Each magical girl type has one angrystate and one happystate
     // that inherit from these two abstract classes.
     protected AbstractAngryState angryState;
@@ -85,20 +87,25 @@ public class MagicalGirlController : MonoBehaviour, IPoolable
 			magicalGirlState.Shoot();
 			cooldownShootingTimer += magicalGirlState.CooldownTimeBeforeShooting;
 		}
+        magicalGirlState.Update();
 
+    }
+
+    public void DefaultMove()
+    {
         // Bounds Reached
-        if (this.transform.position.x < -80 || this.transform.position.x > 80)
+        if (this.transform.position.x < -bounds.x || this.transform.position.x > bounds.x)
             x_dir *= -1;
-        if (this.transform.position.y < -40 || this.transform.position.y > 40)
+        if (this.transform.position.y < -bounds.y || this.transform.position.y > bounds.y)
             y_dir *= -1;
 
 
-        this.transform.position += new Vector3(x_dir*randomVector.x , y_dir*randomVector.y , 0) * movementSpeed * Time.deltaTime;
+        this.transform.position += new Vector3(x_dir * randomVector.x, y_dir * randomVector.y, 0) * movementSpeed * Time.deltaTime;
         //this.transform.position *= new Vector3(x_delta, y_delta, 1);
 
 
         directionTimer -= Time.deltaTime;
-        if(directionTimer <= 0)
+        if (directionTimer <= 0)
         {
             randomVector = ChangeDirection();
             directionTimer = directionChangeInterval;

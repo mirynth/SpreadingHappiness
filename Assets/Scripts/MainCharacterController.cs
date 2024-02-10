@@ -10,7 +10,8 @@ public class MainCharacterController : MonoBehaviour
 
 	// number of boba bits
 	public int BobaBits = 0;
-	
+
+    public bool input_on = true;
 	public float hSpeed = 10.0f;
 	public float vSpeed = 10.0f;
     bool strafeModeOn = false;
@@ -40,6 +41,10 @@ public class MainCharacterController : MonoBehaviour
    // Update is called once per frame
    void Update()
    {
+
+        if (!input_on)
+            return;
+
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
 

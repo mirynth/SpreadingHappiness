@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,11 @@ public class GameManager : MonoBehaviour
 
     StageManager stage_manager;
     VNManager vn_manager;
+
+    public CinemachineVirtualCamera virtual_camera;
+    public PolygonCollider2D stage_bounds;
+    public PolygonCollider2D boss_bounds;
+
     private void Awake()
     {
         GameManager.Instance = this;
@@ -72,5 +78,15 @@ public class GameManager : MonoBehaviour
         obj.transform.position = position;
 
         return obj.gameObject;
+    }
+
+    public void SetCameraBounds(PolygonCollider2D bounds)
+    {
+        virtual_camera.GetComponent<CinemachineConfiner>().m_BoundingShape2D = bounds;
+    }
+
+    public void SetPlayerInputable(bool playable)
+    {
+        MainCharacterController.instance.input_on = playable;
     }
 }
