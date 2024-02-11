@@ -53,6 +53,11 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    public void SkipToLoss()
+    {
+        current_stage.IncrementStage(true);
+    }
+
     public AbstractStage GetCurrentStage()
     {
         return current_stage;

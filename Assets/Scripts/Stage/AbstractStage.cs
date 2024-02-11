@@ -11,7 +11,7 @@ public abstract class AbstractStage
         return state;
     }
 
-    public virtual void IncrementStage(bool win = true)
+    public virtual void IncrementStage(bool loss = false)
     {
         StageState old_state = state;
         switch (state)
@@ -32,13 +32,7 @@ public abstract class AbstractStage
                 state = StageState.Boss;
                 break;
             case StageState.Boss:
-                if(win)
-                {
-                    state = StageState.VN_Win;
-                } else
-                {
-                    state = StageState.VN_Loss;
-                }
+                state = StageState.VN_Win;
                 break;
             case StageState.VN_Win:
                 state = StageState.Complete;
@@ -49,6 +43,9 @@ public abstract class AbstractStage
             case StageState.Complete:
                 break;
         }
+        if(loss)
+            state = StageState.VN_Loss;
+
         OnStateEnd(old_state);
         OnStateStart(state);
     }

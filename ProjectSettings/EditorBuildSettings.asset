@@ -10,7 +10,7 @@ EditorBuildSettings:
     guid: 6ef70a0be96a445428cd9ac9844f9cc2
   - enabled: 1
     path: Assets/Resources/Scenes/GameScene.unity
-    guid: 20c1187faf0b6984faffc191e5022bda
+    guid: c567d3fe1d09f0a47954ed6ef12a0604
   - enabled: 1
     path: Assets/Resources/Scenes/HappyEnding.unity
     guid: f003c162165bf5b40a8dd72fcda957e0

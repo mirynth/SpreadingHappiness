@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TestStageAlpha : AbstractStage
 {
@@ -34,8 +35,15 @@ public class TestStageAlpha : AbstractStage
                 Pools.Instance().magicalGirlPool.Reset();
                 break;
             case StageState.VN_Win:
+                TimeManager.Instance().SetPause(false);
+                TimeManager.Instance().Reset();
+                GameManager.Instance.SetPlayerInputable(true);
                 break;
             case StageState.VN_Loss:
+                TimeManager.Instance().SetPause(false);
+                TimeManager.Instance().Reset();
+                GameManager.Instance.SetPlayerInputable(true);
+                SceneManager.LoadScene("BadEnding");
                 break;
             case StageState.Complete:
                 break;
@@ -89,8 +97,14 @@ public class TestStageAlpha : AbstractStage
                 }));
                 break;
             case StageState.VN_Win:
+                GameManager.Instance.SetPlayerInputable(false);
+                TimeManager.Instance().SetPause(true);
+                VNManager.Instance().StartVN("WIN");
                 break;
             case StageState.VN_Loss:
+                GameManager.Instance.SetPlayerInputable(false);
+                TimeManager.Instance().SetPause(true);
+                VNManager.Instance().StartVN("LOSS");
                 break;
             case StageState.Complete:
                 break;
@@ -117,11 +131,9 @@ public class TestStageAlpha : AbstractStage
                     return true;
                 break;
             case StageState.VN_Win:
-                //External Increment From VN System (Set false here)
-                return true;
+                return false;
             case StageState.VN_Loss:
-                //External Increment From VN System (Set false here)
-                return true;
+                return false;
             case StageState.Complete:
                 return true;
         }

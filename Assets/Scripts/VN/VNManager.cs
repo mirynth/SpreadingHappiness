@@ -25,15 +25,22 @@ public class VNManager : MonoBehaviour
 
     public void StartVN(string vn_path)
     {
-        if(vn_path == "TEST")
+        var obj = GameObject.Instantiate(Resources.Load<GameObject>("UI/VNPanel"), vn_canvas.transform);
+        if (vn_path == "TEST")
         {
-            var obj = GameObject.Instantiate(Resources.Load<GameObject>("UI/VNPanel"), vn_canvas.transform);
-            obj.GetComponent<VNTest>().Begin();
+            obj.GetComponent<VNTest>().Setup(0);
         }
         if (vn_path == "TEST2")
         {
-            var obj = GameObject.Instantiate(Resources.Load<GameObject>("UI/VNPanel2"), vn_canvas.transform);
-            obj.GetComponent<VNTest>().Begin();
+            obj.GetComponent<VNTest>().Setup(1);
+        }
+        if (vn_path == "WIN")
+        {
+            obj.GetComponent<VNTest>().Setup(2);
+        }
+        if (vn_path == "LOSS")
+        {
+            obj.GetComponent<VNTest>().Setup(3);
         }
     }
 }

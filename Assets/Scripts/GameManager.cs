@@ -89,4 +89,10 @@ public class GameManager : MonoBehaviour
     {
         MainCharacterController.instance.input_on = playable;
     }
+
+    public void PlayerDeath()
+    {
+        SetPlayerInputable(false);
+        stage_manager.SkipToLoss();
+    }
 }

@@ -22,12 +22,18 @@ public class MainMenuController : MonoBehaviour
     
     public void PlayGame()
 	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+		SceneManager.LoadScene("GameScene");
 	}
 	
 	public void QuitGame()
-	{
-		Debug.Log("quit");
-		Application.Quit();
-	}
+    {
+        #if UNITY_EDITOR
+            if (UnityEditor.EditorApplication.isPlaying)
+            {   
+                UnityEditor.EditorApplication.isPlaying = false;
+            }
+        #else
+            Application.Quit();
+        #endif
+    }
 }
