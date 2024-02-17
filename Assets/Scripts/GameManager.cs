@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
     public void SetCameraBounds(PolygonCollider2D bounds)
     {
         virtual_camera.GetComponent<CinemachineConfiner>().m_BoundingShape2D = bounds;
+        MainCharacterController.instance.movement_restriction = bounds.bounds;
     }
 
     public void SetPlayerInputable(bool playable)

@@ -30,6 +30,9 @@ public class MainCharacterController : MonoBehaviour
 
     public MainCharacterUpgrades upgrades;
 
+    public Bounds movement_restriction = new Bounds();
+    public bool restrict_movement = true;
+
     // ************************************************************************
     private void Awake()
     {
@@ -70,7 +73,15 @@ public class MainCharacterController : MonoBehaviour
         // Update the position based on the normalized direction
         Vector2 position = transform.position;
         position += new Vector2(hSpeed * direction.x * Time.deltaTime, vSpeed * direction.y * Time.deltaTime) * speed;
-        transform.position = position;
+
+        if(restrict_movement)
+        {
+            transform.position = new Vector2(Mathf.Min(Mathf.Max(movement_restriction.min.x, position.x), movement_restriction.max.x),
+                Mathf.Min(Mathf.Max(movement_restriction.min.y, position.y), movement_restriction.max.y));
+        } else
+        {
+            transform.position = position;
+        }
 
         //position.x = position.x + hSpeed * horizontal * Time.deltaTime;
         //position.y = position.y + vSpeed * vertical * Time.deltaTime;
