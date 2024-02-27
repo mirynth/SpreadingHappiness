@@ -25,15 +25,22 @@ public class MainMenuController : MonoBehaviour
 	        firstSelected.Select();
         }
     }
-    
+
     public void PlayGame()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
 	
 	public void QuitGame()
-	{
-		Debug.Log("quit");
-		Application.Quit();
-	}
+    {
+        #if UNITY_EDITOR
+            if (UnityEditor.EditorApplication.isPlaying)
+            {   
+                UnityEditor.EditorApplication.isPlaying = false;
+            }
+        #else
+            Application.Quit();
+        #endif
+    }
 }
+

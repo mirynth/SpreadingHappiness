@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public abstract class AbstractMagicalGirlState : MonoBehaviour
+public abstract class AbstractMagicalGirlState 
 {
     // ---- Init variables ---- //
     float shoot_up = 1.0f;
@@ -14,15 +14,17 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
     public abstract void Shoot();
 
     // Time to wait between 2 shots in seconds.
-    public abstract float CooldownTimeBeforeShooting {get;}
-	
-	protected MagicalGirlController magicalGirl;
+    public abstract float CooldownTimeBeforeShooting {get; }
+    public abstract void ApplyVisual(MagicalGirlController parent_controller);
+    public abstract void RemoveVisual(MagicalGirlController parent_controller);
+
+    protected MagicalGirlController magicalGirl;
 	
 	// ************************************************************************
 	
-	public void Awake()
+	public void Initialize(MagicalGirlController parent)
 	{
-		this.magicalGirl = GetComponent<MagicalGirlController>();
+		this.magicalGirl = parent;
 	}
 
     // ************************************************************************
@@ -42,6 +44,14 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
         for(int i = 0; i <= 7; i++)
         {
             LaunchProjectile(bulletType, new BobaPatternSimpleMove(AngleToVector(45 * i), speed));
+        }
+    }
+    protected void ShootInCircle(float speed, BulletType bulletType, int count, int offset)
+    {
+        float angle = 360 / count;
+        for (int i = 0; i < count; i++)
+        {
+            LaunchProjectile(bulletType, new BobaPatternSimpleMove(AngleToVector(offset + (angle * i)), speed));
         }
     }
 
@@ -70,13 +80,13 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
         this.shoot_up *= -1.0f;
     }
 
-    protected void ShootMissile(BulletType bulletType, float speed = 8.0f, float home_speed = 20.0f, float max_turning_rate = 1.0f)
+    protected void ShootMissile(BulletType bulletType, float speed = 8.0f, float home_speed = 20.0f, float max_turning_rate = 1.0f, bool ignore_barrage = false)
     {
         // as another example we will shoot a missile boba
 
         // fix to create a barrage, we will need to create a better way to specify attack bursts.
         this.barrage_count += 1;
-        if (this.barrage_count > 6) { return; }
+        if (!ignore_barrage && this.barrage_count > 6) { return; }
 
         // Get the main character (through a singleton, sorry!)
         Rigidbody2D main_character_rigidbody = MainCharacterController.instance.GetComponent<Rigidbody2D>();
@@ -116,5 +126,10 @@ public abstract class AbstractMagicalGirlState : MonoBehaviour
         projectileObject.transform.SetPositionAndRotation(instantiation_position, Quaternion.identity);
 
         projectileObject.GetComponent<AbstractProjectileController>().SetPattern(pattern);
+    }
+
+    public virtual void Update()
+    {
+        magicalGirl.DefaultMove();
     }
 }

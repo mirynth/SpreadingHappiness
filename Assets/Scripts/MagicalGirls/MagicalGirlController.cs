@@ -1,11 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MagicalGirlController : MonoBehaviour
+public class MagicalGirlController : MonoBehaviour, IPoolable
 {
-	[SerializeField] public bool isAngryAtStart;
-
 	private float cooldownShootingTimer;
     private float directionChangeInterval = 5f;
     private float directionTimer = 5f;
@@ -13,6 +12,8 @@ public class MagicalGirlController : MonoBehaviour
     private int x_dir = 1;
     private int y_dir = 1;
     private Vector2 randomVector;
+
+    protected Vector2 bounds = new Vector2(80, 40);
 
     // Each magical girl type has one angrystate and one happystate
     // that inherit from these two abstract classes.
@@ -26,7 +27,8 @@ public class MagicalGirlController : MonoBehaviour
 	
 	// Rigidbody2D. Do not set in Editor.
 	private Rigidbody2D rigid2d;
-	
+    [NonSerialized] public SpriteRenderer magical_girl_renderable;
+
 	// ************************************************************************
 	
 	public void TurnHappy()
@@ -40,33 +42,34 @@ public class MagicalGirlController : MonoBehaviour
 
     Vector2 ChangeDirection()
     {
-        int randomAngle = Mathf.RoundToInt(Random.Range(0, 360));
+        int randomAngle = Mathf.RoundToInt(UnityEngine.Random.Range(0, 360));
         Vector2 newVector = new Vector2(Mathf.Cos(randomAngle) * Mathf.Deg2Rad, Mathf.Sin(randomAngle) * Mathf.Deg2Rad);
         return newVector;
     }
     // ************************************************************************
 
 	public void Awake()
-	{
-		// The Magical girl unity-object should also have one
-		// angry state component and one happy state component
-		angryState = GetComponent<AbstractAngryState>();
-		happyState = GetComponent<AbstractHappyState>();
+    {
+        rigid2d = GetComponent<Rigidbody2D>();
+        magical_girl_renderable = GetComponentInChildren<SpriteRenderer>();
+    }
 
-		if (isAngryAtStart)
-			magicalGirlState = angryState;
-		else magicalGirlState = happyState;
-	}
-
-    // Start is called before the first frame update
     void Start()
     {
+    }
+
+    public void Setup(AbstractAngryState angry, AbstractHappyState happy, bool isAngry)
+    {
+        angryState = angry;
+        happyState = happy;
+
+        angry.Initialize(this);
+        happy.Initialize(this);
+
+        magicalGirlState = isAngry ? angryState : happyState;
+        magicalGirlState.ApplyVisual(this);
+
         cooldownShootingTimer = magicalGirlState.CooldownTimeBeforeShooting;
-        rigid2d = GetComponent<Rigidbody2D>();
-		
-		if (isAngryAtStart)
-			magicalGirlState = angryState;
-		else magicalGirlState = happyState;
 
         randomVector = ChangeDirection();
         directionTimer = directionChangeInterval;
@@ -84,23 +87,55 @@ public class MagicalGirlController : MonoBehaviour
 			magicalGirlState.Shoot();
 			cooldownShootingTimer += magicalGirlState.CooldownTimeBeforeShooting;
 		}
+        magicalGirlState.Update();
 
+    }
+
+    public void DefaultMove()
+    {
         // Bounds Reached
-        if (this.transform.position.x < -80 || this.transform.position.x > 80)
+        if (this.transform.position.x < -bounds.x || this.transform.position.x > bounds.x)
             x_dir *= -1;
-        if (this.transform.position.y < -40 || this.transform.position.y > 40)
+        if (this.transform.position.y < -bounds.y || this.transform.position.y > bounds.y)
             y_dir *= -1;
 
 
-        this.transform.position += new Vector3(x_dir*randomVector.x , y_dir*randomVector.y , 0) * movementSpeed * Time.deltaTime;
+        this.transform.position += new Vector3(x_dir * randomVector.x, y_dir * randomVector.y, 0) * movementSpeed * Time.deltaTime;
         //this.transform.position *= new Vector3(x_delta, y_delta, 1);
 
 
         directionTimer -= Time.deltaTime;
-        if(directionTimer <= 0)
+        if (directionTimer <= 0)
         {
             randomVector = ChangeDirection();
             directionTimer = directionChangeInterval;
         }
+    }
+
+    public void OnPooled()
+    {
+        //Show in Heirarchy
+        gameObject.hideFlags &= ~HideFlags.HideInHierarchy;
+    }
+
+    public void OnUnPooled()
+    {
+        //Hide in Hierarchy
+        gameObject.hideFlags |= HideFlags.HideInHierarchy;
+        magicalGirlState.RemoveVisual(this);
+    }
+
+    public void OnPoolCreate()
+    {
+        gameObject.hideFlags |= HideFlags.HideInHierarchy;
+    }
+
+    public void OnPoolDestroy()
+    {
+    }
+
+    public void OnPoolReset()
+    {
+        gameObject.hideFlags |= HideFlags.HideInHierarchy;
     }
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Assets/Scripts/MainCharacterUpgrades.cs
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,9 @@ namespace UI
     {
         [SerializeField] private Selectable firstSelected;
         int boba;
+
+        public List<UpgradeData> upgrades;
+        List<int> upgrade_order;
 
         public List<Sprite> imageList;
 
@@ -31,6 +35,21 @@ namespace UI
         "heals you",
         "increase max health"
         };
+
+        private void Awake()
+        {
+            upgrades = new List<UpgradeData>
+            {
+                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/blueberry"), "Blueberry", "Increase speed", (MainCharacterController controller) => 
+                { controller.Upgrade_Speed(); }),
+                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/lemon"), "Lemon", "Increases defence", (MainCharacterController controller) => 
+                { controller.Upgrade_Defence();  }),
+                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/burger"), "Burger", "Increases regeneration", (MainCharacterController controller) => 
+                { controller.Upgrade_Regen();  }),
+                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/elixir"), "Elixir", "Increase your maximum health", (MainCharacterController controller) => 
+                { controller.Upgrade_MaxHealth(); })
+            };
+        }
 
         public void BobaChanged(int BobaBits)
         {
@@ -59,6 +78,8 @@ namespace UI
             List<int> nameListChecker = new List<int>();
             int randomNummer;
 
+            upgrade_order = new List<int>();
+
             //3 is how many Taes are shown on the UI
             while (nameListChecker.Count != 3)
             {
@@ -79,11 +100,12 @@ namespace UI
                     int TeaNumber = nameListChecker.Count + 1;
                     Transform transformOption = transform.Find("Tea" + TeaNumber);
 
-                    transformOption.Find("Image").GetComponentInChildren<Image>().sprite = imageList[randomNummer];
-                    transformOption.Find("Name").GetComponentInChildren<TMP_Text>().text = nameList[randomNummer];
-                    transformOption.Find("Description").GetComponentInChildren<TMP_Text>().text = descriptionList[randomNummer];
+                    transformOption.Find("Image").GetComponentInChildren<Image>().sprite = upgrades[randomNummer].sprite;
+                    transformOption.Find("Name").GetComponentInChildren<TMP_Text>().text = upgrades[randomNummer].name + " (" + upgrades[randomNummer].UpgradeCount() + ")";
+                    transformOption.Find("Description").GetComponentInChildren<TMP_Text>().text = upgrades[randomNummer].description;
 
                     nameListChecker.Add(randomNummer);
+                    upgrade_order.Add(randomNummer);
                 }
             }
         }
@@ -92,6 +114,7 @@ namespace UI
         {
             if (option < 4)
             {
+                /*
                 Transform transformOption = transform.Find("Tea" + option);
 
                 string OptionText = transformOption.Find("Name").GetComponentInChildren<TMP_Text>().text;
@@ -114,7 +137,8 @@ namespace UI
                         // code block
                         break;
                 }
-
+                */
+                upgrades[upgrade_order[option - 1]].Upgrade(MainCharacterController.instance);
 
                 boba -= 30;
             }
