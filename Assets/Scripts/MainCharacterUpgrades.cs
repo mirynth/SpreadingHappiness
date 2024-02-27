@@ -11,6 +11,7 @@ namespace UI
 {
     public class MainCharacterUpgrades : MonoBehaviour
     {
+        [SerializeField] private Selectable firstSelected;
         int boba;
 
         public List<Sprite> imageList;
@@ -51,7 +52,10 @@ namespace UI
             Cursor.lockState = CursorLockMode.None;
             transform.gameObject.SetActive(true);
             Time.timeScale = 0f;
-
+            if (firstSelected != null)
+            {
+                firstSelected.Select();
+            }
             List<int> nameListChecker = new List<int>();
             int randomNummer;
 

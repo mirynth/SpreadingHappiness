@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] private Selectable firstSelected;
+    [SerializeField] private Selectable firstSettingsSelected;
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
     public GameObject SettingsMenuUI;
@@ -13,19 +17,16 @@ public class PauseMenu : MonoBehaviour
     {
         Resume();
     }
-    
-    void Update()
+
+    public void OnPauseInput(InputAction.CallbackContext context)
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(GameIsPaused)
         {
-            if(GameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
+            Resume();
+        }
+        else
+        {
+            Pause();
         }
     }
 
@@ -44,6 +45,10 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameIsPaused = true;
+        if (firstSelected != null)
+        {
+            firstSelected.Select();
+        }
     }
 
     public void LoadMenu()
@@ -55,5 +60,34 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenSettings()
+    {
+        SettingsDisplayMode(true);
+    }
+
+    public void CloseSettings()
+    {
+        SettingsDisplayMode(false);
+    }
+
+    private void SettingsDisplayMode(bool settingsOn)
+    {
+        Selectable selectable = settingsOn ? firstSettingsSelected : firstSelected;
+        if (selectable != null)
+        {
+            selectable.Select();
+        }
+
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(!settingsOn);
+        }
+
+        if (SettingsMenuUI != null)
+        {
+            SettingsMenuUI.SetActive(settingsOn);
+        }
     }
 }
