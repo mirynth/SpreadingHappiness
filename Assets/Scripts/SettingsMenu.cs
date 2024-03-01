@@ -8,13 +8,16 @@ using System.Linq;
 
 public class SettingsMenu : MonoBehaviour
 {
-    //Volume is not added
     public AudioMixer audioMixer;
-
     public TMP_Dropdown resolutionDropdown;
 
     Resolution[] resolutions;
+    public static SettingsMenu instance;
 
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         resolutions = Screen.resolutions.Where(resolution => resolution.refreshRateRatio.value == Screen.currentResolution.refreshRateRatio.value).ToArray();
@@ -34,13 +37,13 @@ public class SettingsMenu : MonoBehaviour
                 currentResolutionIndex = i;
             }
         }
-
+        
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
 
         GetResolution(PlayerPrefs.GetInt("resolution"));
-        GetVolume(PlayerPrefs.GetFloat("volume"));
+        GetVolume(PlayerPrefs.GetFloat("musicVolume"));
         GetQuality(PlayerPrefs.GetInt("quality"));
         if (PlayerPrefs.GetString("fullscreen").ToLower() == "false")
             GetFullscreen(false);
@@ -57,8 +60,8 @@ public class SettingsMenu : MonoBehaviour
 
     public void SetVolume(float volume)
     {
-        //audioMixer.SetFloat("volume", volume);
-        PlayerPrefs.SetFloat("volume", volume);
+        audioMixer.SetFloat("Music", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("musicVolume", volume);
         transform.Find("VolumeSlider").GetComponent<Slider>().value = volume;
     }
 
@@ -83,7 +86,7 @@ public class SettingsMenu : MonoBehaviour
 
     public void GetVolume(float volume)
     {
-        //audioMixer.SetFloat("volume", volume);
+        audioMixer.SetFloat("Music", Mathf.Log10(volume) * 20);
         transform.Find("VolumeSlider").GetComponent<Slider>().value = volume;
     }
 
