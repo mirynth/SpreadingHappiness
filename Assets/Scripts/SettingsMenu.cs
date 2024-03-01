@@ -12,12 +12,7 @@ public class SettingsMenu : MonoBehaviour
     public TMP_Dropdown resolutionDropdown;
 
     Resolution[] resolutions;
-    public static SettingsMenu instance;
 
-    private void Awake()
-    {
-        instance = this;
-    }
     private void Start()
     {
         resolutions = Screen.resolutions.Where(resolution => resolution.refreshRateRatio.value == Screen.currentResolution.refreshRateRatio.value).ToArray();
