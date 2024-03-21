@@ -1,5 +1,3 @@
-<<<<<<< HEAD:Assets/Scripts/MainCharacterController.cs
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UI;
@@ -23,7 +21,6 @@ public class MainCharacterController : MonoBehaviour
     public bool input_on = true;
 	public float hSpeed = 10.0f;
 	public float vSpeed = 10.0f;
-    bool strafeModeOn = false;
     CircleCollider2D hitboxCollider;
     SpriteRenderer hitboxRenderer;
 
@@ -35,16 +32,12 @@ public class MainCharacterController : MonoBehaviour
     public Bounds movement_restriction = new Bounds();
     public bool restrict_movement = true;
 
-    public MainCharacterUpgrades upgrades;
-
     // ************************************************************************
     private void Awake()
     {
         instance = this;
     }
 
-
-    // Start is called before the first frame update
     void Start()
    {
         hitboxCollider = transform.GetComponent<CircleCollider2D>();
@@ -54,12 +47,8 @@ public class MainCharacterController : MonoBehaviour
         UIEvents.OnPlayerHealthChanged(new(health, max_health));
     }
 	
-   // ************************************************************************
-	
-   // Update is called once per frame
    void Update()
    {
-
         if (!input_on)
             return;
 
@@ -87,19 +76,6 @@ public class MainCharacterController : MonoBehaviour
         {
             transform.position = position;
         }
-
-        //position.x = position.x + hSpeed * horizontal * Time.deltaTime;
-        //position.y = position.y + vSpeed * vertical * Time.deltaTime;
-        
-        // Apply strafe when LeftShift is held down
-        if (Input.GetKeyDown(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.LeftShift)))
-        {
-            toggleStrafe();
-        }
-        //Debug.Log("current speed: " + hSpeed);
-		
-		// TODO: This throws a ref not set exception
-        //Debug.Log("current radius: " + hitboxCollider);
   
         if(regen > 0.0f)
         {
@@ -112,18 +88,6 @@ public class MainCharacterController : MonoBehaviour
             GameManager.Instance.PlayerDeath();
         }
     }
-	
-   // ************************************************************************
-	
-    /*void FixedUpdate()
-    {
-        Vector2 position = transform.position;
-        position.x = position.x + hSpeed * horizontal * Time.deltaTime;
-        position.y = position.y + vSpeed * vertical * Time.deltaTime;
-        transform.position = position;
-    }*/
-
-   // ************************************************************************
 
    public void IncrementBobaBitCount(int value = 1)
    {
@@ -133,8 +97,6 @@ public class MainCharacterController : MonoBehaviour
         upgrades.BobaChanged(BobaBits);
     }
    
-   // ************************************************************************
-   	
     public void TakeDamage(float value = 1)
     {
         //Defence reduces by a flat amount down to 10% of damage taken.
@@ -146,30 +108,30 @@ public class MainCharacterController : MonoBehaviour
         }
     }
 
-   public void OnMoveInput(InputAction.CallbackContext context)
-   {
-	   Vector2 movementVector = context.ReadValue<Vector2>();
-	   horizontal = movementVector.x;
-	   vertical = movementVector.y;
-   }
+    public void OnMoveInput(InputAction.CallbackContext context)
+    {
+	    Vector2 movementVector = context.ReadValue<Vector2>();
+	    horizontal = movementVector.x;
+	    vertical = movementVector.y;
+    }
 
-   public void OnStrafeInput(InputAction.CallbackContext context)
-   {
-	   if (context.performed)
-	   {
-		   hSpeed = 5.0f;
-		   vSpeed = 5.0f;
-		   hitboxCollider.radius = 0.01f;
-		   hitboxRenderer.enabled = true;
-	   }
-	   else if (context.canceled)
-	   {
-		   hSpeed = 10.0f;
-		   vSpeed = 10.0f;
-		   hitboxCollider.radius = 2;
-		   hitboxRenderer.enabled = false;
-	   }
-   }
+    public void OnStrafeInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            hSpeed = 5.0f;
+            vSpeed = 5.0f;
+            hitboxCollider.radius = 0.01f;
+            hitboxRenderer.enabled = true;
+        }
+        else if (context.canceled)
+        {
+            hSpeed = 10.0f;
+            vSpeed = 10.0f;
+            hitboxCollider.radius = 2;
+            hitboxRenderer.enabled = false;
+        }
+    }
 
     public void Upgrade_Speed()
     {
