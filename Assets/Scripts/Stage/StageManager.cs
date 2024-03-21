@@ -33,7 +33,7 @@ public class StageManager : MonoBehaviour
         current_stage.IncrementStage();
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         if(current_stage != null)
         {
@@ -50,6 +50,14 @@ public class StageManager : MonoBehaviour
                     SceneManager.LoadScene("HappyEnding");
                 }
             }
+        }
+    }
+
+    public void CheckSkipToWin()
+    {
+        if(current_stage.GetState() == StageState.Complete && stages.Count == 0)
+        {
+            SceneManager.LoadScene("HappyEnding");
         }
     }
 

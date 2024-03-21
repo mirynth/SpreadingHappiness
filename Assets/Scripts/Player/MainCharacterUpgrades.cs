@@ -1,9 +1,4 @@
-<<<<<<< HEAD:Assets/Scripts/MainCharacterUpgrades.cs
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,41 +7,22 @@ namespace UI
 {
     public class MainCharacterUpgrades : MonoBehaviour
     {
-        [SerializeField] private Selectable firstSelected;
         int boba;
 
         public List<UpgradeData> upgrades;
         List<int> upgrade_order;
 
-        public List<Sprite> imageList;
-
-        List<string> nameList = new List<string>
-        {
-        "Blueberry",
-        "lemon",
-        "acai berry",
-        "Vitali"
-        };
-
-        List<string> descriptionList = new List<string>
-        {
-        "increase your movement speed",
-        "increase your defense",
-        "heals you",
-        "increase max health"
-        };
-
         private void Awake()
         {
             upgrades = new List<UpgradeData>
             {
-                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/blueberry"), "Blueberry", "Increase speed", (MainCharacterController controller) => 
+                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/blueberry"), "Blueberry", "Increase speed", (MainCharacterController controller) =>
                 { controller.Upgrade_Speed(); }),
-                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/lemon"), "Lemon", "Increases defence", (MainCharacterController controller) => 
+                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/lemon"), "Lemon", "Increases defence", (MainCharacterController controller) =>
                 { controller.Upgrade_Defence();  }),
-                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/burger"), "Burger", "Increases regeneration", (MainCharacterController controller) => 
+                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/burger"), "Burger", "Increases regeneration", (MainCharacterController controller) =>
                 { controller.Upgrade_Regen();  }),
-                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/elixir"), "Elixir", "Increase your maximum health", (MainCharacterController controller) => 
+                new UpgradeData(Resources.Load<Sprite>("Art/Upgrades/elixir"), "Elixir", "Increase your maximum health", (MainCharacterController controller) =>
                 { controller.Upgrade_MaxHealth(); })
             };
         }
@@ -71,10 +47,7 @@ namespace UI
             Cursor.lockState = CursorLockMode.None;
             transform.gameObject.SetActive(true);
             Time.timeScale = 0f;
-            if (firstSelected != null)
-            {
-                firstSelected.Select();
-            }
+
             List<int> nameListChecker = new List<int>();
             int randomNummer;
 
@@ -83,9 +56,9 @@ namespace UI
             //3 is how many Taes are shown on the UI
             while (nameListChecker.Count != 3)
             {
-                randomNummer = Random.Range(0, nameList.Count);
-                if (nameListChecker.Count != nameList.Count - 1)
-                    randomNummer = Random.Range(0, nameList.Count);
+                randomNummer = Random.Range(0, upgrades.Count);
+                if (nameListChecker.Count != upgrades.Count - 1)
+                    randomNummer = Random.Range(0, upgrades.Count);
                 else
                 {
                     for (int i = 0; i < nameListChecker.Count; i++)
@@ -114,30 +87,6 @@ namespace UI
         {
             if (option < 4)
             {
-                /*
-                Transform transformOption = transform.Find("Tea" + option);
-
-                string OptionText = transformOption.Find("Name").GetComponentInChildren<TMP_Text>().text;
-                Debug.Log("Bought: " + OptionText);
-
-                //getting upgrades
-                switch (OptionText)
-                {
-                    case "Blueberry":
-                        MainCharacterController.instance.hSpeed += 1;
-                        MainCharacterController.instance.vSpeed += 1;
-                        break;
-                    case "lemon":
-                        // code block
-                        break;
-                    case "acai berry":
-                        // code block
-                        break;
-                    case "Vitali":
-                        // code block
-                        break;
-                }
-                */
                 upgrades[upgrade_order[option - 1]].Upgrade(MainCharacterController.instance);
 
                 boba -= 30;
